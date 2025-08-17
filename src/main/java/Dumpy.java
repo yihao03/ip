@@ -24,24 +24,19 @@ public class Dumpy {
         "%s\n" +
         "What can I do for you today?\n", Dumpy.LOGO);
 
-    System.out.println(Dumpy.LINE_SEPARATOR);
+    while (true) {
+      System.out.println(Dumpy.LINE_SEPARATOR);
+      String input = console.readLine("> ");
+      System.out.println(Dumpy.LINE_SEPARATOR);
 
-    System.out.println("Goodbye!");
-    return;
-
-    // while (true) {
-    // System.out.println(Dumpy.LINE_SEPARATOR);
-    // String input = console.readLine("> ");
-    // System.out.println(Dumpy.LINE_SEPARATOR);
-    //
-    // switch (input) {
-    // case "exit":
-    // System.out.println("Goodbye!");
-    // return;
-    // default:
-    // System.out.println("You said: " + input);
-    // break;
-    // }
-    // }
+      switch (input) {
+        case "exit":
+          System.out.println("Goodbye!");
+          return;
+        default:
+          System.out.println("You said: " + input);
+          break;
+      }
+    }
   }
 }

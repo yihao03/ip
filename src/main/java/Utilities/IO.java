@@ -10,7 +10,12 @@ public class IO {
   public static String readLine() {
     try {
       System.out.printf("> ");
-      return in.readLine();
+      String line = in.readLine();
+      // print output if not running in a console environment
+      if (System.console() == null && line != null) {
+        System.out.println(line);
+      }
+      return line;
     } catch (Exception e) {
       System.out.println("Error reading input: " + e.getMessage());
       return "";

@@ -1,7 +1,88 @@
-Hello from
- ____        _        
-|  _ \ _   _| | _____ 
-| | | | | | | |/ / _ \
-| |_| | |_| |   <  __/
-|____/ \__,_|_|\_\___|
+Hello, I am the smartest chatbot
+██████╗ ██╗   ██╗███╗   ███╗██████╗ ██╗   ██╗
+██╔══██╗██║   ██║████╗ ████║██╔══██╗╚██╗ ██╔╝
+██║  ██║██║   ██║██╔████╔██║██████╔╝ ╚████╔╝
+██║  ██║██║   ██║██║╚██╔╝██║██╔═══╝   ╚██╔╝
+██████╔╝╚██████╔╝██║ ╚═╝ ██║██║        ██║
+╚═════╝  ╚═════╝ ╚═╝     ╚═╝╚═╝        ╚═╝
 
+What can I do for you today?
+-----------------------------------
+> todo
+-----------------------------------
+Please provide the task name
+> Buy milk
+Task added! You now have 1 tasks in your list.
+-----------------------------------
+> deadline
+-----------------------------------
+Please provide the task name
+> Submit report
+Please provide the deadline (yyyy-MM-dd HH:mm)
+> 2025/01/32 18:00
+Invalid format. Use yyyy-MM-dd HH:mm (e.g., 2025-10-31 23:59)
+> 2025/41/32 18:00
+Invalid format. Use yyyy-MM-dd HH:mm (e.g., 2025-10-31 23:59)
+> 2025-01-31 18:00
+Task added! You now have 2 tasks in your list.
+-----------------------------------
+> event
+-----------------------------------
+Please provide the task name
+> Team sync
+Please provide the event start time (e.g., 2023-10-31 18:00)
+> 2025-01-31 16:00
+Please provide the event end time (e.g., 2023-10-31 18:00)
+> 2025-01-31 15:00
+Start time must be before end time. Please try again.
+Please provide the event start time (e.g., 2023-10-31 18:00)
+> 2025-01-31 15:00
+Please provide the event end time (e.g., 2023-10-31 18:00)
+> 2025-01-31 16:00
+Task added! You now have 3 tasks in your list.
+-----------------------------------
+> todo
+-----------------------------------
+Please provide the task name
+> Task B
+Task added! You now have 4 tasks in your list.
+-----------------------------------
+> list
+-----------------------------------
+Here's what you have to do!
+1. [ ] Buy milk
+2. [ ] Submit report (by: 2025-01-31 18:00)
+3. [ ] Team sync (from: 2025-01-31 15:00 to: 2025-01-31 16:00)
+4. [ ] Task B
+-----------------------------------
+> mark 3
+-----------------------------------
+[✅] Team sync (from: 2025-01-31 15:00 to: 2025-01-31 16:00)
+-----------------------------------
+> mark 3
+-----------------------------------
+[ ] Team sync (from: 2025-01-31 15:00 to: 2025-01-31 16:00)
+-----------------------------------
+> list
+-----------------------------------
+Here's what you have to do!
+1. [ ] Buy milk
+2. [ ] Submit report (by: 2025-01-31 18:00)
+3. [ ] Team sync (from: 2025-01-31 15:00 to: 2025-01-31 16:00)
+4. [ ] Task B
+-----------------------------------
+> mark 2
+-----------------------------------
+[✅] Submit report (by: 2025-01-31 18:00)
+-----------------------------------
+> list
+-----------------------------------
+Here's what you have to do!
+1. [ ] Buy milk
+2. [✅] Submit report (by: 2025-01-31 18:00)
+3. [ ] Team sync (from: 2025-01-31 15:00 to: 2025-01-31 16:00)
+4. [ ] Task B
+-----------------------------------
+> exit
+-----------------------------------
+Goodbye!

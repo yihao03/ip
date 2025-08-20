@@ -1,0 +1,22 @@
+todo
+Buy milk
+deadline
+Submit report
+2025/01/32 18:00
+2025/41/32 18:00
+2025-01-31 18:00
+event
+Team sync
+2025-01-31 16:00
+2025-01-31 15:00
+2025-01-31 15:00
+2025-01-31 16:00
+todo
+Task B
+list
+mark 3
+mark 3
+list
+mark 2
+list
+exit

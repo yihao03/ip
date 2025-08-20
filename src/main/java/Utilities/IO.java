@@ -21,4 +21,9 @@ public class IO {
       return "";
     }
   }
+
+  public static String readLine(String prompt) {
+    System.out.printf(prompt + "\n");
+    return readLine();
+  }
 }

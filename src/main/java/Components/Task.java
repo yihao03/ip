@@ -20,6 +20,7 @@ public class Task {
 
   @Override
   public String toString() {
-    return description;
+    String status = isDone ? "[✅] " : "[ ] ";
+    return status + description;
   }
 }

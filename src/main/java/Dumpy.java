@@ -39,6 +39,14 @@ public class Dumpy {
         } catch (TaskNotFoundException e) {
           System.out.println(e.getMessage());
         }
+      } else if (input.startsWith("delete")) {
+        int taskNumber = Integer.parseInt(
+            input.replaceAll("[^0-9-]", ""));
+        try {
+          todo.deleteTask(taskNumber);
+        } catch (TaskNotFoundException e) {
+          System.out.println(e.getMessage());
+        }
       } else {
         switch (input) {
           case "todo":

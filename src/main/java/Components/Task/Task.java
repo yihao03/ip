@@ -16,6 +16,10 @@ public class Task {
     return this.isDone;
   }
 
+  public String getDescription() {
+    return description;
+  }
+
   /**
    * takes over main application to create task
    *

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import Components.Task.Task;
 import Exceptions.TaskNotFoundException;
+import Utilities.IO;
 
 public class Todo {
   private ArrayList<Task> tasks;
@@ -21,6 +22,23 @@ public class Todo {
   public void addTask(Task task) {
     tasks.add(task);
     System.out.println("Task added! You now have " + tasks.size() + " tasks in your list.");
+  }
+
+  public void deleteTask(int index) throws TaskNotFoundException {
+    if (index <= 0 || index > tasks.size()) {
+      throw new TaskNotFoundException(tasks.size(), index);
+    }
+    Task task = tasks.get(index - 1);
+
+    // Confirmation because Prof Ben taught me the 4 SWE Principles
+    String confirmation = IO.readLine("Are you sure you want to remove this task? (y/N) \n" + task.getDescription());
+    System.out.println(confirmation);
+    if (confirmation.trim().equals("y")) {
+      tasks.remove(index - 1);
+      System.out.println("Task deleted! You now have " + tasks.size() + " tasks in your list.");
+    } else {
+      System.out.println("Task not deleted.");
+    }
   }
 
   /**

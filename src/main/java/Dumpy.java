@@ -26,9 +26,9 @@ public class Dumpy {
         "What can I do for you today?\n", Dumpy.LOGO);
 
     while (true) {
-      System.out.printf("%s\n> ", Dumpy.LINE_SEPARATOR);
+      System.out.println(Dumpy.LINE_SEPARATOR);
       String input = IO.readLine();
-      System.out.printf("%s\n> ", Dumpy.LINE_SEPARATOR);
+      System.out.println(Dumpy.LINE_SEPARATOR);
 
       if (input.startsWith("mark")) {
         int taskNumber = Integer.parseInt(

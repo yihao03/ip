@@ -1,5 +1,7 @@
 import java.io.Console;
 
+import Components.Todo;
+
 public class Dumpy {
   private static final String LINE_SEPARATOR = "-----------------------------------";
   private static final String LOGO = """
@@ -12,7 +14,9 @@ public class Dumpy {
       """;
 
   public static void main(String[] args) {
+    // Initialization
     Console console = System.console();
+    Todo todo = new Todo();
 
     if (console == null) {
       System.err.println("No console available. Please run this program in a terminal.");
@@ -30,11 +34,15 @@ public class Dumpy {
       System.out.println(Dumpy.LINE_SEPARATOR);
 
       switch (input) {
+        case "list":
+          System.out.print(todo.getTasks());
+          break;
         case "exit":
           System.out.println("Goodbye!");
           return;
         default:
-          System.out.println("You said: " + input);
+          todo.addTask(input);
+          System.out.println("added: " + input);
           break;
       }
     }

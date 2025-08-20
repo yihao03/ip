@@ -6,7 +6,7 @@ import Exceptions.TaskNotFoundException;
 import Utilities.IO;
 
 public class Dumpy {
-  private static final String LINE_SEPARATOR = "-----------------------------------";
+  private static final String LINE_SEPARATOR = "----------------------------------------------------------------------";
   private static final String LOGO = """
       ██████╗ ██╗   ██╗███╗   ███╗██████╗ ██╗   ██╗
       ██╔══██╗██║   ██║████╗ ████║██╔══██╗╚██╗ ██╔╝

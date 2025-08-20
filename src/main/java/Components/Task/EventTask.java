@@ -24,14 +24,19 @@ public class EventTask extends Task {
   public static Task createTask(Console console) {
     System.out.println("Please provide the task name");
     String description = console.readLine("> ");
+    while (true) {
+      System.out.println("Please provide the event start time (e.g., 2023-10-31 18:00)");
+      LocalDateTime startTime = DateTime.getDateTime(console);
 
-    System.out.println("Please provide the event start time (e.g., 2023-10-31 18:00)");
-    LocalDateTime startTime = DateTime.getDateTime(console);
+      System.out.println("Please provide the event end time (e.g., 2023-10-31 18:00)");
+      LocalDateTime endTime = DateTime.getDateTime(console);
 
-    System.out.println("Please provide the event end time (e.g., 2023-10-31 18:00)");
-    LocalDateTime endTime = DateTime.getDateTime(console);
-
-    return new EventTask(description, startTime, endTime);
+      if (startTime.isAfter(endTime)) {
+        System.out.println("Start time must be before end time. Please try again.");
+      } else {
+        return new EventTask(description, startTime, endTime);
+      }
+    }
   }
 
   @Override

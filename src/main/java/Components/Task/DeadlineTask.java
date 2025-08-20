@@ -37,7 +37,7 @@ public class DeadlineTask extends Task {
     System.out.println("Please provide the task name");
     String description = console.readLine("> ");
 
-    System.out.println("Please provide the deadline (e.g., 2023-10-31)");
+    System.out.printf("Please provide the deadline (%s)\n", DateTime.DATE_FORMAT);
     LocalDateTime deadline = DateTime.getDateTime(console);
 
     return new DeadlineTask(description, deadline);

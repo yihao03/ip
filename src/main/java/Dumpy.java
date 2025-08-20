@@ -1,7 +1,7 @@
 import java.io.Console;
 
-import Components.Task;
 import Components.Todo;
+import Components.Task.Task;
 import Exceptions.TaskNotFoundException;
 
 public class Dumpy {
@@ -35,28 +35,28 @@ public class Dumpy {
       String input = console.readLine("> ");
       System.out.println(Dumpy.LINE_SEPARATOR);
 
-      if (input.startsWith("mark")) {
-        int taskNumber = Integer.parseInt(
-            input.replaceAll("[^0-9-]", ""));
-        try {
-          Task task = todo.toggleDone(taskNumber);
-          System.out.println(task.toString());
-        } catch (TaskNotFoundException e) {
-          System.out.println(e.getMessage());
-        }
-      } else {
-        switch (input) {
-          case "list":
-            System.out.print(todo.getTasks());
-            break;
-          case "exit":
-            System.out.println("Goodbye!");
-            return;
-          default:
-            todo.addTask(input);
-            System.out.println("added: " + input);
-            break;
-        }
+      switch (input) {
+        case "todo":
+          Task task = Task.createTask(console);
+          todo.addTask(task);
+          break;
+        case "deadline":
+          task = Components.Task.DeadlineTask.createTask(console);
+          todo.addTask(task);
+          break;
+        case "event":
+          task = Components.Task.EventTask.createTask(console);
+          todo.addTask(task);
+          break;
+        case "list":
+          System.out.print(todo.getTasks());
+          break;
+        case "exit":
+          System.out.println("Goodbye!");
+          return;
+        default:
+          System.out.println("Sorry I don't understand :(");
+          break;
       }
     }
   }

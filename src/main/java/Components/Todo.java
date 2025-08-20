@@ -2,6 +2,7 @@ package Components;
 
 import java.util.ArrayList;
 
+import Components.Task.Task;
 import Exceptions.TaskNotFoundException;
 
 public class Todo {
@@ -12,13 +13,14 @@ public class Todo {
   }
 
   /**
-   * @param description The todo item's description
-   * @return the number of tasks in the list
+   * Adds task to the todo list and prints the total number of tasks
+   * 
+   * @param task task to be added to the list
+   * @return the total number of tasks in the list after adding the new task
    */
-  public Todo addTask(String description) {
-    Task newTask = new Task(description);
-    tasks.add(newTask);
-    return this;
+  public void addTask(Task task) {
+    tasks.add(task);
+    System.out.println("Task added! You now have " + tasks.size() + " tasks in your list.");
   }
 
   /**

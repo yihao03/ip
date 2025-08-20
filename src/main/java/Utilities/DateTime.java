@@ -13,7 +13,6 @@ public class DateTime {
   public static LocalDateTime getDateTime() {
     String date;
     while (true) {
-      System.out.println("> ");
       date = IO.readLine();
       try {
         return LocalDateTime.parse(date, formatter);

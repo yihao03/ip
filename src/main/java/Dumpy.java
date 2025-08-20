@@ -1,8 +1,9 @@
-import java.io.Console;
-
 import Components.Todo;
+import Components.Task.DeadlineTask;
+import Components.Task.EventTask;
 import Components.Task.Task;
 import Exceptions.TaskNotFoundException;
+import Utilities.IO;
 
 public class Dumpy {
   private static final String LINE_SEPARATOR = "-----------------------------------";
@@ -17,13 +18,7 @@ public class Dumpy {
 
   public static void main(String[] args) {
     // Initialization
-    Console console = System.console();
     Todo todo = new Todo();
-
-    if (console == null) {
-      System.err.println("No console available. Please run this program in a terminal.");
-      return;
-    }
 
     // Greeting
     System.out.printf("Hello, I am the smartest chatbot\n" +
@@ -31,9 +26,9 @@ public class Dumpy {
         "What can I do for you today?\n", Dumpy.LOGO);
 
     while (true) {
-      System.out.println(Dumpy.LINE_SEPARATOR);
-      String input = console.readLine("> ");
-      System.out.println(Dumpy.LINE_SEPARATOR);
+      System.out.printf("%s\n> ", Dumpy.LINE_SEPARATOR);
+      String input = IO.readLine();
+      System.out.printf("%s\n> ", Dumpy.LINE_SEPARATOR);
 
       if (input.startsWith("mark")) {
         int taskNumber = Integer.parseInt(
@@ -47,15 +42,15 @@ public class Dumpy {
       } else {
         switch (input) {
           case "todo":
-            Task task = Task.createTask(console);
+            Task task = Task.createTask();
             todo.addTask(task);
             break;
           case "deadline":
-            task = Components.Task.DeadlineTask.createTask(console);
+            task = DeadlineTask.createTask();
             todo.addTask(task);
             break;
           case "event":
-            task = Components.Task.EventTask.createTask(console);
+            task = EventTask.createTask();
             todo.addTask(task);
             break;
           case "list":

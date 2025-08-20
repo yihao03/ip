@@ -1,11 +1,11 @@
 package Components.Task;
 
-import java.io.Console;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
 import Utilities.DateTime;
+import Utilities.IO;
 
 public class DeadlineTask extends Task {
   private LocalDateTime deadline;
@@ -15,10 +15,10 @@ public class DeadlineTask extends Task {
     this.deadline = deadline;
   }
 
-  protected static LocalDateTime getDateTime(Console console) {
+  protected static LocalDateTime getDateTime() {
     String date;
     while (true) {
-      date = console.readLine("> ");
+      date = IO.readLine();
       try {
         return LocalDateTime.parse(date, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
       } catch (DateTimeParseException e) {
@@ -30,15 +30,14 @@ public class DeadlineTask extends Task {
   /**
    * takes over main application to create task
    * 
-   * @param console console passed from the main application to read line
    * @return the task created to be added to a todo list
    */
-  public static Task createTask(Console console) {
+  public static Task createTask() {
     System.out.println("Please provide the task name");
-    String description = console.readLine("> ");
+    String description = IO.readLine();
 
     System.out.printf("Please provide the deadline (%s)\n", DateTime.DATE_FORMAT);
-    LocalDateTime deadline = DateTime.getDateTime(console);
+    LocalDateTime deadline = DateTime.getDateTime();
 
     return new DeadlineTask(description, deadline);
   }

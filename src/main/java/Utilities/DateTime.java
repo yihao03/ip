@@ -1,6 +1,7 @@
 package Utilities;
 
-import java.io.Console;
+import java.io.BufferedReader;
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -11,10 +12,11 @@ public class DateTime {
 
   private static DateTimeFormatter formatter = DateTimeFormatter.ofPattern(DateTime.DATE_FORMAT);
 
-  public static LocalDateTime getDateTime(Console console) {
+  public static LocalDateTime getDateTime() {
     String date;
     while (true) {
-      date = console.readLine("> ");
+      System.out.println("> ");
+      date = IO.readLine();
       try {
         return LocalDateTime.parse(date, formatter);
       } catch (DateTimeParseException e) {

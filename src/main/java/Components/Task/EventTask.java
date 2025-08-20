@@ -1,9 +1,9 @@
 package Components.Task;
 
-import java.io.Console;
 import java.time.LocalDateTime;
 
 import Utilities.DateTime;
+import Utilities.IO;
 
 public class EventTask extends Task {
   private LocalDateTime startTime;
@@ -18,18 +18,18 @@ public class EventTask extends Task {
   /**
    * Takes over main application to create task
    *
-   * @param console console passed from the main application to read line
+   * @param in in passed from the main application to read line
    * @return the task created to be added to a todo list
    */
-  public static Task createTask(Console console) {
+  public static Task createTask() {
     System.out.println("Please provide the task name");
-    String description = console.readLine("> ");
+    String description = IO.readLine();
     while (true) {
       System.out.println("Please provide the event start time (e.g., 2023-10-31 18:00)");
-      LocalDateTime startTime = DateTime.getDateTime(console);
+      LocalDateTime startTime = DateTime.getDateTime();
 
       System.out.println("Please provide the event end time (e.g., 2023-10-31 18:00)");
-      LocalDateTime endTime = DateTime.getDateTime(console);
+      LocalDateTime endTime = DateTime.getDateTime();
 
       if (startTime.isAfter(endTime)) {
         System.out.println("Start time must be before end time. Please try again.");

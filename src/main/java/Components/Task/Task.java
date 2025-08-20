@@ -1,6 +1,9 @@
 package Components.Task;
 
-import java.io.Console;
+import java.io.BufferedReader;
+import java.io.IOException;
+
+import Utilities.IO;
 
 public class Task {
   private String description;
@@ -19,12 +22,11 @@ public class Task {
   /**
    * takes over main application to create task
    *
-   * @param console console passed from the main application to read line
    * @return the task created to be added to a todo list
    */
-  public static Task createTask(Console console) {
-    System.out.println("Please provide the task name");
-    String description = console.readLine("> ");
+  public static Task createTask() {
+    System.out.printf("Please provide the task name\n> ");
+    String description = IO.readLine();
     return new Task(description);
   }
 

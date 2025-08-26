@@ -1,30 +1,22 @@
 package components.task;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
 
+import utilities.Data;
 import utilities.DateTime;
 import utilities.IO;
 
 public class DeadlineTask extends Task {
     private LocalDateTime deadline;
 
-    private DeadlineTask(String description, LocalDateTime deadline) {
+    public DeadlineTask(String description, LocalDateTime deadline) {
         super(description);
         this.deadline = deadline;
     }
 
-    protected static LocalDateTime getDateTime() {
-        String date;
-        while (true) {
-            date = IO.readLine();
-            try {
-                return LocalDateTime.parse(date, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
-            } catch (DateTimeParseException e) {
-                System.out.printf("Invalid format. Use %s (e.g., %s)\n", DateTime.DATE_FORMAT, DateTime.EXAMPLE_DATE);
-            }
-        }
+    public DeadlineTask(String description, Boolean status, LocalDateTime deadline) {
+        super(description, status);
+        this.deadline = deadline;
     }
 
     /**
@@ -40,6 +32,20 @@ public class DeadlineTask extends Task {
         LocalDateTime deadline = DateTime.getDateTime();
 
         return new DeadlineTask(description, deadline);
+    }
+
+    public static Task decodeData(String[] data) throws IllegalArgumentException {
+        if (data.length != 4) {
+            throw new IllegalArgumentException();
+        }
+        return new DeadlineTask(data[1], data[2].equals("1"), DateTime.parseDateTime(data[3]));
+    }
+
+    @Override
+    public String encodeData() {
+        String status = this.isDone ? "1" : "0";
+        return String.join(Data.DELIMITER, TaskType.DEADLINE.toString(), this.description, status,
+                                        DateTime.formatDateTime(this.deadline));
     }
 
     @Override

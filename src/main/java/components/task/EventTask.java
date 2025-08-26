@@ -2,6 +2,7 @@ package components.task;
 
 import java.time.LocalDateTime;
 
+import utilities.Data;
 import utilities.DateTime;
 import utilities.IO;
 
@@ -9,10 +10,15 @@ public class EventTask extends Task {
     private LocalDateTime startTime;
     private LocalDateTime endTime;
 
-    private EventTask(String description, LocalDateTime startTime, LocalDateTime endTime) {
-        super(description);
+    private EventTask(String description, Boolean status, LocalDateTime startTime, LocalDateTime endTime) {
+        super(description, status);
         this.startTime = startTime;
         this.endTime = endTime;
+
+    }
+
+    private EventTask(String description, LocalDateTime startTime, LocalDateTime endTime) {
+        this(description, false, startTime, endTime);
     }
 
     /**
@@ -39,9 +45,23 @@ public class EventTask extends Task {
         }
     }
 
+    public static Task decodeData(String[] data) throws IllegalArgumentException {
+        if (data.length != 5) {
+            throw new IllegalArgumentException();
+        }
+        return new EventTask(data[1], data[2].equals("1"), DateTime.parseDateTime(data[3]),
+                                        DateTime.parseDateTime(data[4]));
+    }
+
+    @Override
+    public String encodeData() {
+        String status = this.isDone ? "1" : "0";
+        return String.join(Data.DELIMITER, TaskType.EVENT.toString(), this.description, status,
+                                        DateTime.formatDateTime(this.startTime), DateTime.formatDateTime(this.endTime));
+    }
+
     @Override
     public String toString() {
-        return super.toString() + " (from: " + DateTime.formatDateTime(startTime) + " to: "
-                                        + DateTime.formatDateTime(endTime) + ")";
+        return "EventTask []";
     }
 }

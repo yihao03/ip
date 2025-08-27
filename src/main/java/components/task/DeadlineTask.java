@@ -47,6 +47,16 @@ public class DeadlineTask extends Task {
                                         DateTime.formatDateTime(this.deadline));
     }
 
+    /**
+     * Indicates if the deadline is due within a week
+     * 
+     * @return true if the deadline is due within a week
+     */
+    @Override
+    public boolean isDueSoon() {
+        return this.deadline.plusWeeks(1).isAfter(LocalDateTime.now()) && !super.isDone();
+    }
+
     @Override
     public String toString() {
         return super.toString() + " (by: " + DateTime.formatDateTime(deadline) + ")";

@@ -30,10 +30,10 @@ public class EventTask extends Task {
         System.out.println("Please provide the task name");
         String description = IO.readLine();
         while (true) {
-            System.out.println("Please provide the event start time (e.g., 2023-10-31 18:00)");
+            System.out.printf("Please provide the event start time (e.g., %s) \n", DateTime.INPUT_DATE_FORMAT);
             LocalDateTime startTime = DateTime.getDateTime();
 
-            System.out.println("Please provide the event end time (e.g., 2023-10-31 18:00)");
+            System.out.printf("Please provide the event end time (e.g., %s) \n", DateTime.INPUT_DATE_FORMAT);
             LocalDateTime endTime = DateTime.getDateTime();
 
             if (startTime.isAfter(endTime)) {
@@ -42,6 +42,16 @@ public class EventTask extends Task {
                 return new EventTask(description, startTime, endTime);
             }
         }
+    }
+
+    /**
+     * Indicates if the event is due within a week
+     * 
+     * @return true if the event is due within a week
+     */
+    @Override
+    public boolean isDueSoon() {
+        return this.endTime.plusWeeks(1).isAfter(endTime) && !super.isDone();
     }
 
     @Override

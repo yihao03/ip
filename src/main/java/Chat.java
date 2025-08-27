@@ -34,15 +34,15 @@ public class Chat {
                 switch (input) {
                 case "todo":
                     Task task = Task.createTask();
-                    todo.addTask(task, false);
+                    todo.addTask(task);
                     break;
                 case "deadline":
                     task = DeadlineTask.createTask();
-                    todo.addTask(task, false);
+                    todo.addTask(task);
                     break;
                 case "event":
                     task = EventTask.createTask();
-                    todo.addTask(task, false);
+                    todo.addTask(task);
                     break;
                 case "list":
                     System.out.print(todo.listTasks());

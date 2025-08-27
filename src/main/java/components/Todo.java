@@ -17,14 +17,21 @@ public class Todo {
      * Adds task to the todo list and prints the total number of tasks
      * 
      * @param task task to be added to the list
-     * @param silent if true, suppresses the print statement
      * @return the total number of tasks in the list after adding the new task
      */
-    public void addTask(Task task, Boolean silent) {
+    public void addTask(Task task) {
         tasks.add(task);
-        if (!silent) {
-            System.out.println("Task added! You now have " + tasks.size() + " tasks in your list.");
-        }
+        System.out.println("Task added! You now have " + tasks.size() + " tasks in your list.");
+    }
+
+    /**
+     * Loads task to the todo list without printing anything intended for
+     * loading from storage
+     *
+     * @param task task to be added to the list
+     */
+    public void loadTask(Task task) {
+        tasks.add(task);
     }
 
     public void deleteTask(int index) throws TaskNotFoundException {

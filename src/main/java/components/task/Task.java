@@ -26,6 +26,10 @@ public class Task {
         return description;
     }
 
+    public boolean isDone() {
+        return isDone;
+    }
+
     /**
      * takes over main application to create task
      *
@@ -55,6 +59,15 @@ public class Task {
     public String encodeBasic() {
         String status = this.isDone ? "1" : "0";
         return String.join(Data.DELIMITER, this.description, status);
+    }
+
+    /**
+     * Indicates if the task is due within a week
+     * 
+     * @return false as basic task has no deadline
+     */
+    public boolean isDueSoon() {
+        return false;
     }
 
     @Override

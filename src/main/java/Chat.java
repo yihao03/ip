@@ -5,11 +5,38 @@ import components.task.Task;
 import exceptions.TaskNotFoundException;
 import utilities.IO;
 
+/**
+ * Entry point for interactive console chat session handling user commands to
+ * manage tasks in a {@link Todo}.
+ * <p>
+ * Supported commands:
+ * <ul>
+ * <li>mark &lt;number&gt; - toggle completion state of a task</li>
+ * <li>delete &lt;number&gt; - remove a task</li>
+ * <li>find &lt;keywords&gt; - search tasks by description (space-separated
+ * tokens)</li>
+ * <li>todo | deadline | event - create a task (delegates to respective
+ * factories)</li>
+ * <li>list - list all tasks</li>
+ * <li>exit - terminate the session</li>
+ * </ul>
+ * Unrecognised commands produce an error message.
+ */
 public class Chat {
+
+    /**
+     * Starts an interactive blocking REPL loop reading from standard input.
+     * Greets the user, shows upcoming tasks, then processes commands until
+     * "exit".
+     *
+     * @param todo mutable task collection to operate on
+     * @return 0 on normal exit (for potential process status usage)
+     */
     public static int start(Todo todo) {
         // Greeting
         System.out.printf("Hello, I am the smartest chatbot\n" + "%s\n" + "What can I do for you today?\n", Dumpy.LOGO);
 
+        // Show tasks due soon before entering loop
         System.out.print(todo.listDueSoonTasks());
 
         while (true) {

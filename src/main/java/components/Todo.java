@@ -7,6 +7,11 @@ import components.task.Task;
 import exceptions.TaskNotFoundException;
 import utilities.IO;
 
+/**
+ * Represents an in-memory task list. Provides operations to add/load tasks,
+ * delete with confirmation, search by description substrings, toggle completion
+ * status, list all tasks, list tasks due soon, and access the underlying list.
+ */
 public class Todo {
     private ArrayList<Task> tasks;
 
@@ -35,6 +40,12 @@ public class Todo {
         tasks.add(task);
     }
 
+    /**
+     * Deletes the task at the given 1-based index after a confirmation prompt.
+     *
+     * @param index 1-based index of the task to delete
+     * @throws TaskNotFoundException if the index is out of bounds
+     */
     public void deleteTask(int index) throws TaskNotFoundException {
         if (index <= 0 || index > tasks.size()) {
             throw new TaskNotFoundException(tasks.size(), index);
@@ -77,9 +88,11 @@ public class Todo {
     }
 
     /**
-     * @param index The index of the item to be marked as done index is the same
-     * as the number displayed when list
-     * @return the item marked as done
+     * Toggles the completion status of the task at the given 1-based index.
+     *
+     * @param index 1-based index of the task to toggle
+     * @return the task after its done state has been toggled
+     * @throws TaskNotFoundException if the index is out of bounds
      */
     public Task toggleDone(int index) throws TaskNotFoundException {
         if (index <= 0 || index > tasks.size()) {
@@ -91,20 +104,36 @@ public class Todo {
     }
 
     /**
-     * @return the string of tasks in the list
+     * Lists all tasks currently stored.
+     *
+     * @return formatted string of all tasks, or a message if none exist
      */
     public String listTasks() {
         return buildFilteredTasksString(tasks, t -> true, "Here are the tasks in your list:", "Nothing to do!");
     }
 
     /**
-     * @return the string of tasks that are due soon
+     * Lists tasks that are considered due soon (delegates logic to
+     * Task::isDueSoon).
+     *
+     * @return formatted string of due-soon tasks, or a congratulatory message
+     * if none
      */
     public String listDueSoonTasks() {
         return buildFilteredTasksString(tasks, Task::isDueSoon, "Here are the tasks that are due soon:",
                                         "You have no tasks that are due soon. Good job!");
     }
 
+    /**
+     * Builds a formatted string listing tasks that satisfy the given predicate.
+     *
+     * @param taskList list of tasks to inspect
+     * @param pred predicate determining inclusion
+     * @param header header line to print when there is at least one match
+     * @param emptyMessage message returned if no tasks match
+     * @return formatted string of matching tasks (1-based numbering) or the
+     * empty message
+     */
     private String buildFilteredTasksString(ArrayList<Task> taskList, Predicate<Task> pred, String header,
                                     String emptyMessage) {
         StringBuilder sb = new StringBuilder(header + "\n");
@@ -123,6 +152,11 @@ public class Todo {
         }
     }
 
+    /**
+     * Returns the underlying mutable task list.
+     *
+     * @return internal ArrayList of tasks
+     */
     public ArrayList<Task> getTasks() {
         return this.tasks;
     }

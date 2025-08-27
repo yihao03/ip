@@ -54,11 +54,13 @@ public class DeadlineTask extends Task {
      */
     @Override
     public boolean isDueSoon() {
-        return this.deadline.plusWeeks(1).isAfter(LocalDateTime.now()) && !super.isDone();
+        LocalDateTime now = LocalDateTime.now();
+        System.out.println(super.isDone());
+        return !super.isDone() && !deadline.isBefore(now) // deadline >= now
+                                        && deadline.isBefore(now.plusWeeks(1));
     }
 
-    @Override
     public String toString() {
-        return super.toString() + " (by: " + DateTime.formatDateTime(deadline) + ")";
+        return super.toString() + " (by: " + DateTime.printDateTime(deadline) + ")";
     }
 }

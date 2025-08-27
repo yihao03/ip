@@ -51,7 +51,9 @@ public class EventTask extends Task {
      */
     @Override
     public boolean isDueSoon() {
-        return this.endTime.plusWeeks(1).isAfter(endTime) && !super.isDone();
+        LocalDateTime now = LocalDateTime.now();
+        return !super.isDone() && !startTime.isBefore(now) // deadline >= now
+                                        && startTime.isBefore(now.plusWeeks(1));
     }
 
     @Override
@@ -70,7 +72,7 @@ public class EventTask extends Task {
 
     @Override
     public String toString() {
-        return super.toString() + " (from: " + DateTime.formatDateTime(startTime) + " to: "
-                                        + DateTime.formatDateTime(endTime) + ")";
+        return super.toString() + " (from: " + DateTime.printDateTime(startTime) + " to: "
+                                        + DateTime.printDateTime(endTime) + ")";
     }
 }

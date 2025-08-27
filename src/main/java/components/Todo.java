@@ -1,6 +1,7 @@
 package components;
 
 import java.util.ArrayList;
+import java.util.function.Predicate;
 
 import components.task.Task;
 import exceptions.TaskNotFoundException;
@@ -53,6 +54,29 @@ public class Todo {
     }
 
     /**
+     * Finds tasks whose descriptions contain all given substrings
+     * (case-insensitive). If no substrings are provided, returns all tasks.
+     *
+     * @param substrings substrings to look for
+     * @return list of matching tasks
+     */
+    public String findTasksByDescription(String... substrings) throws IllegalArgumentException {
+        if (substrings == null || substrings.length == 0) {
+            throw new IllegalArgumentException("Please provide at least one substring to search for.");
+        }
+
+        return buildFilteredTasksString(tasks, task -> {
+            String desc = task.getDescription().toLowerCase();
+            for (String sub : substrings) {
+                if (!desc.contains(sub.toLowerCase())) {
+                    return false;
+                }
+            }
+            return true;
+        }, "Here are the matching tasks in your list:", "No matching tasks found.");
+    }
+
+    /**
      * @param index The index of the item to be marked as done index is the same
      * as the number displayed when list
      * @return the item marked as done
@@ -70,34 +94,33 @@ public class Todo {
      * @return the string of tasks in the list
      */
     public String listTasks() {
-        int i = 1;
-        StringBuilder sb = new StringBuilder("Here's what you have to do!\n");
-        for (Task task : tasks) {
-            sb.append(String.format("%d. %s\n", i, task.toString()));
-            i++;
-        }
-
-        return sb.toString();
+        return buildFilteredTasksString(tasks, t -> true, "Here are the tasks in your list:", "Nothing to do!");
     }
 
     /**
      * @return the string of tasks that are due soon
      */
     public String listDueSoonTasks() {
+        return buildFilteredTasksString(tasks, Task::isDueSoon, "Here are the tasks that are due soon:",
+                                        "You have no tasks that are due soon. Good job!");
+    }
+
+    private String buildFilteredTasksString(ArrayList<Task> taskList, Predicate<Task> pred, String header,
+                                    String emptyMessage) {
+        StringBuilder sb = new StringBuilder(header + "\n");
         int i = 1;
-        StringBuilder sb = new StringBuilder();
-        for (Task task : tasks) {
-            if (task.isDueSoon()) {
+        for (Task task : taskList) {
+            if (pred.test(task)) {
                 sb.append(String.format("%d. %s\n", i, task.toString()));
-                i++;
+                ++i;
             }
         }
 
         if (i == 1) {
-            return "You have no tasks that are due soon!";
+            return emptyMessage + "\n";
+        } else {
+            return sb.toString();
         }
-
-        return sb.toString();
     }
 
     public ArrayList<Task> getTasks() {

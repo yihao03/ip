@@ -1,11 +1,18 @@
 package components;
 
-import components.task.*;
-import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.time.LocalDateTime;
 
-import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.Test;
+
+import components.task.DeadlineTask;
+import components.task.EventTask;
+import components.task.Task;
+import components.task.TaskType;
 import utilities.DateTime;
 
 public class TodoTest {

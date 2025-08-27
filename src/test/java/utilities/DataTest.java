@@ -1,15 +1,22 @@
 package utilities;
 
-import components.Todo;
-import components.task.*;
-import org.junit.jupiter.api.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.LocalDateTime;
 
-import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
+
+import components.Todo;
+import components.task.DeadlineTask;
+import components.task.EventTask;
+import components.task.Task;
+import components.task.TaskType;
 
 public class DataTest {
 

@@ -1,13 +1,11 @@
 package utilities;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
+
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.PrintStream;
-import java.nio.charset.StandardCharsets;
-
+// CHECKSTYLE:OFF: AbbreviationAsWordInName
 class IOTest {
 
     @Test
@@ -23,8 +21,7 @@ class IOTest {
     void testExtractArgs() {
         assertEquals("all items", IO.extractArgs("list all items", "list"));
         assertEquals("", IO.extractArgs("list", "list"));
-        assertEquals("", IO.extractArgs("li", "list")); // input shorter than
-                                                        // command
+        assertEquals("", IO.extractArgs("li", "list"));
         assertEquals("123value", IO.extractArgs("add 123value", "add"));
     }
 
@@ -35,8 +32,8 @@ class IOTest {
         assertEquals(42, IO.parseIntArg(" id: 42 apples"));
         assertEquals(-15, IO.parseIntArg(" -15 "));
         assertNull(IO.parseIntArg("abc"));
-        assertNull(IO.parseIntArg("--5")); // invalid after cleanup =>
-                                           // NumberFormatException
-        assertEquals(0, IO.parseIntArg("zero0")); // cleaned becomes "0"
+        assertNull(IO.parseIntArg("--5"));
+        assertEquals(0, IO.parseIntArg("zero0"));
     }
 }
+// CHECKSTYLE:ON: AbbreviationAsWordInName

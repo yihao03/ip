@@ -28,7 +28,7 @@ public class DeadlineTask extends Task {
         System.out.println("Please provide the task name");
         String description = IO.readLine();
 
-        System.out.printf("Please provide the deadline (%s)\n", DateTime.DATE_FORMAT);
+        System.out.printf("Please provide the deadline (%s)\n", DateTime.INPUT_DATE_FORMAT);
         LocalDateTime deadline = DateTime.getDateTime();
 
         return new DeadlineTask(description, deadline);

@@ -59,6 +59,8 @@ public class Task {
 
     @Override
     public String toString() {
-        return "Task []";
+        String statusIcon = (isDone ? "[✅] " : "[  ] "); // mark done task with
+                                                         // X
+        return String.format("%s %s", statusIcon, description);
     }
 }

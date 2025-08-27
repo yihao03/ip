@@ -40,7 +40,7 @@ public class Data {
 
         try {
             Stream<String> contentStream = Files.lines(filepath);
-            contentStream.forEach(entry -> res.addTask(decodeData(entry)));
+            contentStream.forEach(entry -> res.addTask(decodeData(entry), true));
             contentStream.close();
         } catch (IOException e) {
             System.out.println("Error encountered when reading data from file: " + filepath.toString());
@@ -48,6 +48,18 @@ public class Data {
         }
 
         return res;
+    }
+
+    public static void saveListToFile(Todo list) {
+        Path filepath = Data.createDataFileIfMissing();
+        String data = Data.encodeData(list);
+
+        try {
+            Files.writeString(filepath, data);
+        } catch (IOException e) {
+            System.out.println("Error encountered when writing data to file: " + filepath.toString());
+            throw new RuntimeException(e);
+        }
     }
 
     public static Task decodeData(String entry) {

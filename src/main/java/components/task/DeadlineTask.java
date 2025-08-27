@@ -43,8 +43,7 @@ public class DeadlineTask extends Task {
 
     @Override
     public String encodeData() {
-        String status = this.isDone ? "1" : "0";
-        return String.join(Data.DELIMITER, TaskType.DEADLINE.toString(), this.description, status,
+        return String.join(Data.DELIMITER, TaskType.DEADLINE.toString(), super.encodeBasic(),
                                         DateTime.formatDateTime(this.deadline));
     }
 

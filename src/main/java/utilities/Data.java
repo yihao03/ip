@@ -1,6 +1,7 @@
 package utilities;
 
 import java.nio.file.Path;
+import java.util.List;
 import java.util.stream.Stream;
 
 import components.Todo;
@@ -8,7 +9,6 @@ import components.task.DeadlineTask;
 import components.task.EventTask;
 import components.task.Task;
 import components.task.TaskType;
-import exceptions.TaskNotFoundException;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -44,6 +44,7 @@ public class Data {
             contentStream.close();
         } catch (IOException e) {
             System.out.println("Error encountered when reading data from file: " + filepath.toString());
+            throw new RuntimeException(e);
         }
 
         return res;
@@ -67,5 +68,17 @@ public class Data {
         } catch (IllegalArgumentException | NullPointerException | ArrayIndexOutOfBoundsException e) {
             return Task.createCorruptTask();
         }
+    }
+
+    public static String encodeData(Todo list) {
+        List<Task> tasks = list.getTasks();
+        StringBuilder sb = new StringBuilder();
+
+        tasks.forEach(task -> {
+            sb.append(task.encodeData());
+            sb.append(System.lineSeparator());
+        });
+
+        return sb.toString();
     }
 }

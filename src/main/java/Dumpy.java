@@ -3,6 +3,7 @@ import components.task.DeadlineTask;
 import components.task.EventTask;
 import components.task.Task;
 import exceptions.TaskNotFoundException;
+import utilities.Data;
 import utilities.IO;
 
 public class Dumpy {
@@ -18,7 +19,7 @@ public class Dumpy {
 
     public static void main(String[] args) {
         // Initialization
-        Todo todo = new Todo();
+        Todo todo = Data.readListFromFile();
 
         // Greeting
         System.out.printf("Hello, I am the smartest chatbot\n" + "%s\n" + "What can I do for you today?\n", Dumpy.LOGO);
@@ -58,7 +59,7 @@ public class Dumpy {
                     todo.addTask(task);
                     break;
                 case "list":
-                    System.out.print(todo.getTasks());
+                    System.out.print(todo.listTasks());
                     break;
                 case "exit":
                     System.out.println("Goodbye!");

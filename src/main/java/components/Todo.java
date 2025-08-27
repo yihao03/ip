@@ -59,7 +59,7 @@ public class Todo {
     /**
      * @return the string of tasks in the list
      */
-    public String getTasks() {
+    public String listTasks() {
         int i = 1;
         StringBuilder sb = new StringBuilder("Here's what you have to do!\n");
         for (Task task : tasks) {
@@ -68,5 +68,9 @@ public class Todo {
         }
 
         return sb.toString();
+    }
+
+    public ArrayList<Task> getTasks() {
+        return this.tasks;
     }
 }

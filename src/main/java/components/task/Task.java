@@ -4,8 +4,8 @@ import utilities.Data;
 import utilities.IO;
 
 public class Task {
-    protected String description;
-    protected boolean isDone;
+    private String description;
+    private boolean isDone;
 
     protected Task(String description) {
         this.description = description;
@@ -49,8 +49,12 @@ public class Task {
     }
 
     public String encodeData() {
+        return String.join(Data.DELIMITER, TaskType.TODO.toString(), this.encodeBasic());
+    }
+
+    public String encodeBasic() {
         String status = this.isDone ? "1" : "0";
-        return String.join(Data.DELIMITER, TaskType.TODO.toString(), this.description, status);
+        return String.join(Data.DELIMITER, this.description, status);
     }
 
     @Override

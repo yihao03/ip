@@ -80,6 +80,26 @@ public class Todo {
         return sb.toString();
     }
 
+    /**
+     * @return the string of tasks that are due soon
+     */
+    public String listDueSoonTasks() {
+        int i = 1;
+        StringBuilder sb = new StringBuilder();
+        for (Task task : tasks) {
+            if (task.isDueSoon()) {
+                sb.append(String.format("%d. %s\n", i, task.toString()));
+                i++;
+            }
+        }
+
+        if (i == 1) {
+            return "You have no tasks that are due soon!";
+        }
+
+        return sb.toString();
+    }
+
     public ArrayList<Task> getTasks() {
         return this.tasks;
     }

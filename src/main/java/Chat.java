@@ -10,6 +10,11 @@ public class Chat {
         // Greeting
         System.out.printf("Hello, I am the smartest chatbot\n" + "%s\n" + "What can I do for you today?\n", Dumpy.LOGO);
 
+        if (todo.getTasks().size() > 0) {
+            System.out.println(Dumpy.LINE_SEPARATOR);
+            System.out.println("You have tasks due soon!");
+            System.out.print(todo.listDueSoonTasks());
+        }
         while (true) {
             System.out.println(Dumpy.LINE_SEPARATOR);
             String input = IO.readLine();

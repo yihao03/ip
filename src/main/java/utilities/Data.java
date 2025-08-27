@@ -37,26 +37,14 @@ public class Data {
     public static Todo readListFromFile() {
         Path filepath = Data.createDataFileIfMissing();
         Todo res = new Todo();
-        Todo dueSoonList = new Todo();
 
         try {
             Stream<String> contentStream = Files.lines(filepath);
-            contentStream.forEach(entry -> {
-                Task task = Data.decodeData(entry);
-                res.loadTask(task);
-                if (task.isDueSoon()) {
-                    dueSoonList.loadTask(task);
-                }
-            });
+            contentStream.forEach(entry -> res.loadTask(Data.decodeData(entry)));
             contentStream.close();
         } catch (IOException e) {
             System.out.println("Error encountered when reading data from file: " + filepath.toString());
             throw new RuntimeException(e);
-        }
-
-        if (dueSoonList.getTasks().size() > 0) {
-            System.out.println("You have tasks that are due soon!");
-            System.out.println(dueSoonList.listTasks());
         }
 
         return res;

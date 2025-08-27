@@ -30,6 +30,10 @@ public class DateTime {
     }
 
     public static String formatDateTime(LocalDateTime dateTime) {
+        return dateTime.format(formatter);
+    }
+
+    public static String printDateTime(LocalDateTime dateTime) {
         return dateTime.format(outputFormatter);
     }
 }

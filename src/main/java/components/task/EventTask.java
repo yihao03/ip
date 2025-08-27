@@ -68,21 +68,21 @@ public class EventTask extends Task {
     }
 
     /**
-     * Indicates if the event starts within the next week (now <= start < now +
-     * 1 week) and the task is not yet marked done.
+     * Indicates if the event starts within the next week (now &lt;= start &lt;
+     * now + 1 week) and the task is not yet marked done.
      *
      * @return true if the event is due soon
      */
     @Override
     public boolean isDueSoon() {
         LocalDateTime now = LocalDateTime.now();
-        return !super.isDone() && !startTime.isBefore(now) // start >= now
+        return !super.isDone() && !startTime.isBefore(now) // start &gt;= now
                                         && startTime.isBefore(now.plusWeeks(1));
     }
 
     /**
      * Encodes this event for persistence. Format:
-     * EVENT|<description>|<statusFlag>|<startDateTime>|<endDateTime>
+     * EVENT|&lt;description&gt;|&lt;statusFlag&gt;|&lt;startDateTime&gt;|&lt;endDateTime&gt;
      *
      * @return encoded string
      */

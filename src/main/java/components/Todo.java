@@ -21,9 +21,8 @@ public class Todo {
 
     /**
      * Adds task to the todo list and prints the total number of tasks
-     * 
+     *
      * @param task task to be added to the list
-     * @return the total number of tasks in the list after adding the new task
      */
     public void addTask(Task task) {
         tasks.add(task);
@@ -117,7 +116,7 @@ public class Todo {
      * Task::isDueSoon).
      *
      * @return formatted string of due-soon tasks, or a congratulatory message
-     * if none
+     *         if none
      */
     public String listDueSoonTasks() {
         return buildFilteredTasksString(tasks, Task::isDueSoon, "Here are the tasks that are due soon:",
@@ -132,7 +131,7 @@ public class Todo {
      * @param header header line to print when there is at least one match
      * @param emptyMessage message returned if no tasks match
      * @return formatted string of matching tasks (1-based numbering) or the
-     * empty message
+     *         empty message
      */
     private String buildFilteredTasksString(ArrayList<Task> taskList, Predicate<Task> pred, String header,
                                     String emptyMessage) {

@@ -5,14 +5,11 @@ import utilities.IO;
 
 /**
  * Base representation of a task with a textual description and completion
- * status.
- * Acts as the parent for specialized task types (e.g., deadlines, events).
- * Provides:
- * - Toggling of completion state
- * - Basic encoding/decoding for persistence (description + done flag)
- * - Interactive creation of a plain task via console
- * - A default "not due soon" implementation (overridden by subclasses that
- * track time)
+ * status. Acts as the parent for specialized task types (e.g., deadlines,
+ * events). Provides: - Toggling of completion state - Basic encoding/decoding
+ * for persistence (description + done flag) - Interactive creation of a plain
+ * task via console - A default "not due soon" implementation (overridden by
+ * subclasses that track time)
  */
 public class Task {
     /** Human-readable description of the task. */
@@ -31,10 +28,11 @@ public class Task {
     }
 
     /**
-     * Constructs a Task with explicit completion status (used mainly by decoding).
+     * Constructs a Task with explicit completion status (used mainly by
+     * decoding).
      *
      * @param description textual description
-     * @param isDone      initial completion flag
+     * @param isDone initial completion flag
      */
     protected Task(String description, boolean isDone) {
         this.description = description;
@@ -70,7 +68,8 @@ public class Task {
     }
 
     /**
-     * Interactively creates a basic Task by prompting the user for a description.
+     * Interactively creates a basic Task by prompting the user for a
+     * description.
      *
      * @return new Task instance
      */
@@ -90,9 +89,9 @@ public class Task {
     }
 
     /**
-     * Decodes a plain Task from tokenized data.
-     * Expected format length: 3 -> [TaskType, description, statusFlag]
-     * statusFlag: "1" = done, "0" = not done.
+     * Decodes a plain Task from tokenized data. Expected format length: 3 ->
+     * [TaskType, description, statusFlag] statusFlag: "1" = done, "0" = not
+     * done.
      *
      * @param data token array
      * @return decoded Task
@@ -106,8 +105,8 @@ public class Task {
     }
 
     /**
-     * Encodes this Task including its type tag for persistence.
-     * Format: TODO|<description>|<statusFlag>
+     * Encodes this Task including its type tag for persistence. Format:
+     * TODO|&lt;description&gt;|&lt;statusFlag&gt;
      *
      * @return encoded string
      */
@@ -116,10 +115,10 @@ public class Task {
     }
 
     /**
-     * Encodes only the description and status flag.
-     * Used by subclasses when prepending their own type and additional fields.
-     * Format: <description>|<statusFlag> where statusFlag is 1 (done) or 0 (not
-     * done)
+     * Encodes only the description and status flag. Used by subclasses when
+     * prepending their own type and additional fields. Format: Format:
+     * &lt;description&gt;|&lt;statusFlag&gt; where statusFlag is 1 (done) or 0
+     * (not
      *
      * @return encoded core fields
      */
@@ -129,8 +128,8 @@ public class Task {
     }
 
     /**
-     * Indicates if the task is due within a week.
-     * Base implementation returns false; subclasses with temporal fields override.
+     * Indicates if the task is due within a week. Base implementation returns
+     * false; subclasses with temporal fields override.
      *
      * @return false (no deadline associated)
      */

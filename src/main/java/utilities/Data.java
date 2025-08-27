@@ -1,5 +1,7 @@
 package utilities;
 
+import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 import java.util.stream.Stream;
@@ -9,9 +11,6 @@ import components.task.DeadlineTask;
 import components.task.EventTask;
 import components.task.Task;
 import components.task.TaskType;
-
-import java.io.IOException;
-import java.nio.file.Files;
 
 /**
  * Handles persistence of the Todo list. Responsibilities: - Ensures the data
@@ -26,15 +25,15 @@ import java.nio.file.Files;
  * Task.createCorruptTask().
  */
 public class Data {
-    /** Directory where application data is stored. */
-    private static final Path DATA_DIRECTORY = Path.of("data");
-    /** Path to the main todo list storage file. */
-    private static final Path DATA_FILE = DATA_DIRECTORY.resolve("todo_list.txt");
     /**
      * Delimiter used to separate encoded task fields (chosen to avoid common
      * natural text).
      */
     public static final String DELIMITER = "%20";
+    /** Directory where application data is stored. */
+    private static final Path DATA_DIRECTORY = Path.of("data");
+    /** Path to the main todo list storage file. */
+    private static final Path DATA_FILE = DATA_DIRECTORY.resolve("todo_list.txt");
 
     /**
      * Ensures the data directory and file exist, creating them if missing.
@@ -73,7 +72,8 @@ public class Data {
             contentStream.forEach(entry -> res.loadTask(Data.decodeData(entry)));
             contentStream.close();
         } catch (IOException e) {
-            System.out.println("Error encountered when reading data from file: " + filepath.toString());
+            System.out.println("Error encountered when reading data from file: "
+                                            + filepath.toString());
             throw new RuntimeException(e);
         }
 
@@ -94,7 +94,8 @@ public class Data {
         try {
             Files.writeString(filepath, data);
         } catch (IOException e) {
-            System.out.println("Error encountered when writing data to file: " + filepath.toString());
+            System.out.println("Error encountered when writing data to file: "
+                                            + filepath.toString());
             throw new RuntimeException(e);
         }
     }
@@ -121,7 +122,8 @@ public class Data {
             default:
                 throw new IllegalArgumentException();
             }
-        } catch (IllegalArgumentException | NullPointerException | ArrayIndexOutOfBoundsException e) {
+        } catch (IllegalArgumentException | NullPointerException
+                                        | ArrayIndexOutOfBoundsException e) {
             return Task.createCorruptTask();
         }
     }

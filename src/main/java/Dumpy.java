@@ -13,7 +13,7 @@ import utilities.Data;
  */
 public class Dumpy {
     /** Visual separator line used to delimit console output sections. */
-    public static final String LINE_SEPARATOR = "----------------------------------------------------------------------";
+    public static final String LINE_SEPARATOR = "---------------------------------------------------------------------";
     /** ASCII art logo displayed on startup. */
     public static final String LOGO = """
                                     ██████╗ ██╗   ██╗███╗   ███╗██████╗ ██╗   ██╗

@@ -47,7 +47,7 @@ public class DateTime {
      * @param date raw date-time string
      * @return parsed {@link LocalDateTime}
      * @throws DateTimeParseException if the string does not match
-     * {@link #INPUT_DATE_FORMAT}
+     *             {@link #INPUT_DATE_FORMAT}
      */
     public static LocalDateTime parseDateTime(String date) throws DateTimeParseException {
         return LocalDateTime.parse(date, formatter);

@@ -13,7 +13,7 @@ import java.nio.charset.StandardCharsets;
  */
 public class IO {
     /** Shared UTF-8 buffered reader for standard input. */
-    private final static BufferedReader in = new BufferedReader(
+    private static final BufferedReader in = new BufferedReader(
                                     new InputStreamReader(System.in, StandardCharsets.UTF_8));
 
     /**
@@ -89,11 +89,13 @@ public class IO {
      * @return parsed Integer or null if absent / invalid
      */
     public static Integer parseIntArg(String args) {
-        if (args == null || args.isBlank())
+        if (args == null || args.isBlank()) {
             return null;
+        }
         String num = args.replaceAll("[^0-9-]", "");
-        if (num.isEmpty())
+        if (num.isEmpty()) {
             return null;
+        }
         try {
             return Integer.parseInt(num);
         } catch (NumberFormatException e) {

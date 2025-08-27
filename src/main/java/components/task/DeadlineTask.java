@@ -71,7 +71,8 @@ public class DeadlineTask extends Task {
 
     /**
      * Encodes this DeadlineTask into a delimited string suitable for
-     * persistence. Format: DEADLINE|<description>|<statusFlag>|<deadline>
+     * persistence. Format:
+     * DEADLINE|&lt;description&gt;|&lt;statusFlag&gt;|&lt;deadline&gt;
      *
      * @return encoded string representation
      */
@@ -92,7 +93,7 @@ public class DeadlineTask extends Task {
     public boolean isDueSoon() {
         LocalDateTime now = LocalDateTime.now();
         System.out.println(super.isDone());
-        return !super.isDone() && !deadline.isBefore(now) // deadline >= now
+        return !super.isDone() && !deadline.isBefore(now) // deadline <= now
                                         && deadline.isBefore(now.plusWeeks(1));
     }
 

@@ -25,7 +25,9 @@ public class EventTask extends Task {
      * @param startTime event start date-time
      * @param endTime event end date-time (must not be before startTime)
      */
-    public EventTask(String description, Boolean status, LocalDateTime startTime, LocalDateTime endTime) {
+    public EventTask(String description, Boolean status,
+                                    LocalDateTime startTime,
+                                    LocalDateTime endTime) {
         super(description, status);
         this.startTime = startTime;
         this.endTime = endTime;
@@ -38,7 +40,8 @@ public class EventTask extends Task {
      * @param startTime event start date-time
      * @param endTime event end date-time
      */
-    public EventTask(String description, LocalDateTime startTime, LocalDateTime endTime) {
+    public EventTask(String description, LocalDateTime startTime,
+                                    LocalDateTime endTime) {
         this(description, false, startTime, endTime);
     }
 
@@ -53,10 +56,12 @@ public class EventTask extends Task {
         System.out.println("Please provide the task name");
         String description = IO.readLine();
         while (true) {
-            System.out.printf("Please provide the event start time (e.g., %s) \n", DateTime.INPUT_DATE_FORMAT);
+            System.out.printf("Please provide the event start time (e.g., %s) \n",
+                                            DateTime.INPUT_DATE_FORMAT);
             LocalDateTime startTime = DateTime.getDateTime();
 
-            System.out.printf("Please provide the event end time (e.g., %s) \n", DateTime.INPUT_DATE_FORMAT);
+            System.out.printf("Please provide the event end time (e.g., %s) \n",
+                                            DateTime.INPUT_DATE_FORMAT);
             LocalDateTime endTime = DateTime.getDateTime();
 
             if (startTime.isAfter(endTime)) {
@@ -76,7 +81,7 @@ public class EventTask extends Task {
     @Override
     public boolean isDueSoon() {
         LocalDateTime now = LocalDateTime.now();
-        return !super.isDone() && !startTime.isBefore(now) // start &gt;= now
+        return !super.isDone() && !startTime.isBefore(now) // start >= now
                                         && startTime.isBefore(now.plusWeeks(1));
     }
 
@@ -88,8 +93,10 @@ public class EventTask extends Task {
      */
     @Override
     public String encodeData() {
-        return String.join(Data.DELIMITER, TaskType.EVENT.toString(), super.encodeBasic(),
-                                        DateTime.formatDateTime(startTime), DateTime.formatDateTime(endTime));
+        return String.join(Data.DELIMITER, TaskType.EVENT.toString(),
+                                        super.encodeBasic(),
+                                        DateTime.formatDateTime(startTime),
+                                        DateTime.formatDateTime(endTime));
     }
 
     /**
@@ -99,11 +106,13 @@ public class EventTask extends Task {
      * @return decoded EventTask
      * @throws IllegalArgumentException if the data length is invalid
      */
-    public static Task decodeData(String[] data) throws IllegalArgumentException {
+    public static Task decodeData(String[] data)
+                                    throws IllegalArgumentException {
         if (data.length != 5) {
             throw new IllegalArgumentException();
         }
-        return new EventTask(data[1], data[2].equals("1"), DateTime.parseDateTime(data[3]),
+        return new EventTask(data[1], data[2].equals("1"),
+                                        DateTime.parseDateTime(data[3]),
                                         DateTime.parseDateTime(data[4]));
     }
 
@@ -115,7 +124,8 @@ public class EventTask extends Task {
      */
     @Override
     public String toString() {
-        return super.toString() + " (from: " + DateTime.printDateTime(startTime) + " to: "
+        return super.toString() + " (from: " + DateTime.printDateTime(startTime)
+                                        + " to: "
                                         + DateTime.printDateTime(endTime) + ")";
     }
 }

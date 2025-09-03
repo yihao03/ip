@@ -34,7 +34,9 @@ public class Chat {
      */
     public static int start(Todo todo) {
         // Greeting
-        System.out.printf("Hello, I am the smartest chatbot\n" + "%s\n" + "What can I do for you today?\n", Dumpy.LOGO);
+        System.out.printf("Hello, I am the smartest chatbot\n" + "%s\n"
+                                        + "What can I do for you today?\n",
+                                        Dumpy.LOGO);
 
         // Show tasks due soon before entering loop
         System.out.print(todo.listDueSoonTasks());
@@ -81,7 +83,8 @@ public class Chat {
                     break;
                 }
                 try {
-                    String outcome = todo.findTasksByDescription(args.split("\\s+"));
+                    String outcome = todo.findTasksByDescription(
+                                                    args.split("\\s+"));
                     System.out.println(outcome);
                 } catch (IllegalArgumentException e) {
                     System.out.println(e.getMessage());

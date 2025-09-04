@@ -24,9 +24,9 @@ public class Todo {
      *
      * @param task task to be added to the list
      */
-    public void addTask(Task task) {
+    public String addTask(Task task) {
         tasks.add(task);
-        System.out.println("Task added! You now have " + tasks.size() + " tasks in your list.");
+        return "Task added! You now have " + tasks.size() + " tasks in your list.";
     }
 
     /**
@@ -45,7 +45,7 @@ public class Todo {
      * @param index 1-based index of the task to delete
      * @throws TaskNotFoundException if the index is out of bounds
      */
-    public void deleteTask(int index) throws TaskNotFoundException {
+    public String deleteTask(int index) throws TaskNotFoundException {
         if (index <= 0 || index > tasks.size()) {
             throw new TaskNotFoundException(tasks.size(), index);
         }
@@ -53,13 +53,13 @@ public class Todo {
 
         // Confirmation because Prof Ben taught me the 4 SWE Principles
         String confirmation = IO.readLine(
-                                        "Are you sure you want to remove this task? (y/N) \n" + task.getDescription());
+                "Are you sure you want to remove this task? (y/N) \n" + task.getDescription());
         System.out.println(confirmation);
         if (confirmation.trim().equals("y")) {
             tasks.remove(index - 1);
-            System.out.println("Task deleted! You now have " + tasks.size() + " tasks in your list.");
+            return "Task deleted! You now have " + tasks.size() + " tasks in your list.";
         } else {
-            System.out.println("Task not deleted.");
+            return "Task not deleted.";
         }
     }
 
@@ -120,21 +120,21 @@ public class Todo {
      */
     public String listDueSoonTasks() {
         return buildFilteredTasksString(tasks, Task::isDueSoon, "Here are the tasks that are due soon:",
-                                        "You have no tasks that are due soon. Good job!");
+                "You have no tasks that are due soon. Good job!");
     }
 
     /**
      * Builds a formatted string listing tasks that satisfy the given predicate.
      *
-     * @param taskList list of tasks to inspect
-     * @param pred predicate determining inclusion
-     * @param header header line to print when there is at least one match
+     * @param taskList     list of tasks to inspect
+     * @param pred         predicate determining inclusion
+     * @param header       header line to print when there is at least one match
      * @param emptyMessage message returned if no tasks match
      * @return formatted string of matching tasks (1-based numbering) or the
      *         empty message
      */
     private String buildFilteredTasksString(ArrayList<Task> taskList, Predicate<Task> pred, String header,
-                                    String emptyMessage) {
+            String emptyMessage) {
         StringBuilder sb = new StringBuilder(header + "\n");
         int i = 1;
         for (Task task : taskList) {

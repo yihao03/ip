@@ -17,9 +17,9 @@ public class IO {
                                     new InputStreamReader(System.in, StandardCharsets.UTF_8));
 
     /**
-     * Reads a single line from standard input after printing a "> " prompt. If
-     * no console is attached (e.g., running in an IDE), it echoes the entered
-     * line back to standard output for visibility.
+     * @deprecated. Reads a single line from standard input after printing a ">
+     * " prompt. If no console is attached (e.g., running in an IDE), it echoes
+     * the entered line back to standard output for visibility.
      *
      * @return the line read, or an empty string on error (never null)
      */
@@ -39,7 +39,7 @@ public class IO {
     }
 
     /**
-     * Prints a custom prompt (with newline) and then delegates to
+     * @deprecated. a custom prompt (with newline) and then delegates to
      * {@link #readLine()}.
      *
      * @param prompt message to show before reading

@@ -72,8 +72,7 @@ public class Data {
             contentStream.forEach(entry -> res.loadTask(Data.decodeData(entry)));
             contentStream.close();
         } catch (IOException e) {
-            System.out.println("Error encountered when reading data from file: "
-                                            + filepath.toString());
+            System.out.println("Error encountered when reading data from file: " + filepath.toString());
             throw new RuntimeException(e);
         }
 
@@ -94,8 +93,7 @@ public class Data {
         try {
             Files.writeString(filepath, data);
         } catch (IOException e) {
-            System.out.println("Error encountered when writing data to file: "
-                                            + filepath.toString());
+            System.out.println("Error encountered when writing data to file: " + filepath.toString());
             throw new RuntimeException(e);
         }
     }
@@ -122,8 +120,7 @@ public class Data {
             default:
                 throw new IllegalArgumentException();
             }
-        } catch (IllegalArgumentException | NullPointerException
-                                        | ArrayIndexOutOfBoundsException e) {
+        } catch (IllegalArgumentException | NullPointerException | ArrayIndexOutOfBoundsException e) {
             return Task.createCorruptTask();
         }
     }

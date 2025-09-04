@@ -20,7 +20,7 @@ public class DeadlineTask extends Task {
      * @param description textual description of the task
      * @param deadline date-time by which the task is due
      */
-    private DeadlineTask(String description, LocalDateTime deadline) {
+    public DeadlineTask(String description, LocalDateTime deadline) {
         super(description);
         this.deadline = deadline;
     }
@@ -32,25 +32,10 @@ public class DeadlineTask extends Task {
      * @param status true if the task is already completed
      * @param deadline date-time by which the task is due
      */
-    private DeadlineTask(String description, Boolean status, LocalDateTime deadline) {
+    private DeadlineTask(String description, Boolean status,
+                                    LocalDateTime deadline) {
         super(description, status);
         this.deadline = deadline;
-    }
-
-    /**
-     * Takes over standard input to interactively create a DeadlineTask. Prompts
-     * the user for a description and a deadline in the accepted format.
-     *
-     * @return the newly created DeadlineTask
-     */
-    public static Task createTask() {
-        System.out.println("Please provide the task name");
-        String description = IO.readLine();
-
-        System.out.printf("Please provide the deadline (%s)\n", DateTime.INPUT_DATE_FORMAT);
-        LocalDateTime deadline = DateTime.getDateTime();
-
-        return new DeadlineTask(description, deadline);
     }
 
     /**
@@ -62,11 +47,13 @@ public class DeadlineTask extends Task {
      * @return reconstructed DeadlineTask
      * @throws IllegalArgumentException if the data length is invalid
      */
-    public static Task decodeData(String[] data) throws IllegalArgumentException {
+    public static Task decodeData(String[] data)
+                                    throws IllegalArgumentException {
         if (data.length != 4) {
             throw new IllegalArgumentException();
         }
-        return new DeadlineTask(data[1], data[2].equals("1"), DateTime.parseDateTime(data[3]));
+        return new DeadlineTask(data[1], data[2].equals("1"),
+                                        DateTime.parseDateTime(data[3]));
     }
 
     /**
@@ -78,7 +65,8 @@ public class DeadlineTask extends Task {
      */
     @Override
     public String encodeData() {
-        return String.join(Data.DELIMITER, TaskType.DEADLINE.toString(), super.encodeBasic(),
+        return String.join(Data.DELIMITER, TaskType.DEADLINE.toString(),
+                                        super.encodeBasic(),
                                         DateTime.formatDateTime(this.deadline));
     }
 
@@ -104,6 +92,7 @@ public class DeadlineTask extends Task {
      */
     @Override
     public String toString() {
-        return super.toString() + " (by: " + DateTime.printDateTime(deadline) + ")";
+        return super.toString() + " (by: " + DateTime.printDateTime(deadline)
+                                        + ")";
     }
 }

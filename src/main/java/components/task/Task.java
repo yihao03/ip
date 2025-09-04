@@ -22,7 +22,7 @@ public class Task {
      *
      * @param description textual description
      */
-    protected Task(String description) {
+    public Task(String description) {
         this.description = description;
         this.isDone = false;
     }
@@ -68,18 +68,6 @@ public class Task {
     }
 
     /**
-     * Interactively creates a basic Task by prompting the user for a
-     * description.
-     *
-     * @return new Task instance
-     */
-    public static Task createTask() {
-        System.out.println("Please provide the task name");
-        String description = IO.readLine();
-        return new Task(description);
-    }
-
-    /**
      * Creates a placeholder task for corrupt data scenarios.
      *
      * @return placeholder Task
@@ -97,7 +85,8 @@ public class Task {
      * @return decoded Task
      * @throws IllegalArgumentException if token length is invalid
      */
-    public static Task decodeData(String[] data) throws IllegalArgumentException {
+    public static Task decodeData(String[] data)
+                                    throws IllegalArgumentException {
         if (data.length != 3) {
             throw new IllegalArgumentException();
         }
@@ -111,7 +100,8 @@ public class Task {
      * @return encoded string
      */
     public String encodeData() {
-        return String.join(Data.DELIMITER, TaskType.TODO.toString(), this.encodeBasic());
+        return String.join(Data.DELIMITER, TaskType.TODO.toString(),
+                                        this.encodeBasic());
     }
 
     /**

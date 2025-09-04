@@ -1,4 +1,5 @@
-import components.Todo;
+package components;
+
 import utilities.Data;
 
 /**
@@ -23,18 +24,15 @@ public class Dumpy {
                                     ██████╔╝╚██████╔╝██║ ╚═╝ ██║██║        ██║
                                     ╚═════╝  ╚═════╝ ╚═╝     ╚═╝╚═╝        ╚═╝
                                     """;
+    private CommandRouter commandRouter;
+    private Todo todo;
 
     /**
-     * Program entry point. Loads tasks, starts chat session, then saves tasks.
-     *
-     * @param args command line arguments (unused)
+     * Constructs a new Dumpy instance. Initializes the todo list by reading
+     * from persistent storage and sets up the command router.
      */
-    public static void main(String[] args) {
-        // Initialization
-        Todo todo = Data.readListFromFile();
-
-        Chat.start(todo);
-
-        Data.saveListToFile(todo);
+    public Dumpy() {
+        this.todo = Data.readListFromFile();
+        this.commandRouter = new CommandRouter(todo);
     }
 }

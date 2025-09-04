@@ -46,33 +46,6 @@ public class EventTask extends Task {
     }
 
     /**
-     * Interactively creates an EventTask by prompting the user over standard
-     * input. Ensures the start time precedes the end time (re-prompts
-     * otherwise).
-     *
-     * @return newly created EventTask
-     */
-    public static Task createTask() {
-        System.out.println("Please provide the task name");
-        String description = IO.readLine();
-        while (true) {
-            System.out.printf("Please provide the event start time (e.g., %s) \n",
-                                            DateTime.INPUT_DATE_FORMAT);
-            LocalDateTime startTime = DateTime.getDateTime();
-
-            System.out.printf("Please provide the event end time (e.g., %s) \n",
-                                            DateTime.INPUT_DATE_FORMAT);
-            LocalDateTime endTime = DateTime.getDateTime();
-
-            if (startTime.isAfter(endTime)) {
-                System.out.println("Start time must be before end time. Please try again.");
-            } else {
-                return new EventTask(description, startTime, endTime);
-            }
-        }
-    }
-
-    /**
      * Indicates if the event starts within the next week (now &lt;= start &lt;
      * now + 1 week) and the task is not yet marked done.
      *

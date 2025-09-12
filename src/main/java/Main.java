@@ -6,17 +6,15 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import ui.MainWindow;
 
 /**
  * A GUI for dumpy using FXML.
  */
 public class Main extends Application {
 
-    private Dumpy dumpy = new Dumpy();
-
     @Override
     public void start(Stage stage) {
+        new Dumpy();
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource(
                                             "/view/MainWindow.fxml"));

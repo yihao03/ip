@@ -21,7 +21,6 @@ import utilities.IO;
 public class CommandRouter implements EventListener {
     // Command constants
     private static final String COMMAND_MARK = "mark";
-    private static final String COMMAND_UNMARK = "unmark";
     private static final String COMMAND_DELETE = "delete";
     private static final String COMMAND_FIND = "find";
     private static final String COMMAND_TODO = "todo";
@@ -66,6 +65,7 @@ public class CommandRouter implements EventListener {
      * @param todo the Todo instance to manage tasks
      */
     public CommandRouter(Todo todo) {
+        assert todo != null : "Todo instance cannot be null";
         this.todo = todo;
         EventBus.subscribe(this);
     }
@@ -92,17 +92,16 @@ public class CommandRouter implements EventListener {
      * @param input the trimmed command string to process
      */
     private void processCommand(String input) {
+        assert input != null : "Input string cannot be null";
+        assert !input.trim().isEmpty() : "Input should not be empty after trimming";
         String command = IO.extractCommand(input);
         String args = IO.extractArgs(input, command);
-
         switch (command.toLowerCase()) {
         case COMMAND_MARK:
             handleMarkCommand(args);
             break;
-        case COMMAND_UNMARK:
-            handleUnmarkCommand(args);
-            break;
         case COMMAND_DELETE:
+        case "delete":
             handleDeleteCommand(args);
             break;
         case COMMAND_FIND:
@@ -156,31 +155,11 @@ public class CommandRouter implements EventListener {
         }
 
         try {
+            assert taskNumber != null : "Task number should be validated before calling toggleDone";
             Task task = todo.toggleDone(taskNumber);
-            EventBus.publish(MESSAGE_TASK_MARKED, false);
-            EventBus.publish("  " + task.toString(), false);
-        } catch (TaskNotFoundException e) {
-            EventBus.publish(e.getMessage(), false);
-        }
-    }
-
-    /**
-     * Handles the unmark command to mark a task as not done. Validates the task
-     * number argument and provides appropriate feedback.
-     *
-     * @param args the argument string containing the task number
-     */
-    private void handleUnmarkCommand(String args) {
-        Integer taskNumber = IO.parseIntArg(args);
-        if (taskNumber == null) {
-            EventBus.publish(USAGE_UNMARK, false);
-            return;
-        }
-
-        try {
-            Task task = todo.toggleDone(taskNumber);
-            EventBus.publish(MESSAGE_TASK_UNMARKED, false);
-            EventBus.publish("  " + task.toString(), false);
+            String result = task.isDone() ? "as done" : "as not done";
+            EventBus.publish(String.format("Nice! I've marked this task %s:",
+                                            result), false);
         } catch (TaskNotFoundException e) {
             EventBus.publish(e.getMessage(), false);
         }
@@ -200,6 +179,7 @@ public class CommandRouter implements EventListener {
         }
 
         try {
+            assert taskNumber != null : "Task number should be validated before calling deleteTask";
             String result = todo.deleteTask(taskNumber);
             EventBus.publish(result, false);
         } catch (TaskNotFoundException e) {

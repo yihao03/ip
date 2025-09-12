@@ -1,7 +1,6 @@
 package components.task;
 
 import utilities.Data;
-import utilities.IO;
 
 /**
  * Base representation of a task with a textual description and completion

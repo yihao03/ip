@@ -23,10 +23,10 @@ public class MainWindow extends AnchorPane implements EventListener {
     @FXML
     private Button sendButton;
 
-    private Image userImage = new Image(this.getClass()
-                                    .getResourceAsStream("/images/DaUser.png"));
-    private Image dumpyImage = new Image(this.getClass()
-                                    .getResourceAsStream("/images/DaDuke.png"));
+    private Image userImage = new Image(
+                    this.getClass().getResourceAsStream("/images/DaUser.png"));
+    private Image dumpyImage = new Image(
+                    this.getClass().getResourceAsStream("/images/DaDuke.png"));
 
     /**
      * Handles incoming messages from the event bus and displays them in the
@@ -85,11 +85,11 @@ public class MainWindow extends AnchorPane implements EventListener {
      */
     private void addBubble(String message, boolean isUser) {
         if (isUser) {
-            dialogContainer.getChildren().add(DialogBox.getUserDialog(message,
-                                            userImage));
+            dialogContainer.getChildren()
+                            .add(DialogBox.getUserDialog(message, userImage));
         } else {
-            dialogContainer.getChildren().add(DialogBox.getDumpyDialog(message,
-                                            dumpyImage));
+            dialogContainer.getChildren()
+                            .add(DialogBox.getDumpyDialog(message, dumpyImage));
         }
     }
 }

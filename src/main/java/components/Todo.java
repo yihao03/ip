@@ -26,7 +26,8 @@ public class Todo {
      */
     public String addTask(Task task) {
         tasks.add(task);
-        return "Task added! You now have " + tasks.size() + " tasks in your list.";
+        return "Task added! You now have " + tasks.size()
+                        + " tasks in your list.";
     }
 
     /**
@@ -53,11 +54,13 @@ public class Todo {
 
         // Confirmation because Prof Ben taught me the 4 SWE Principles
         String confirmation = IO.readLine(
-                "Are you sure you want to remove this task? (y/N) \n" + task.getDescription());
+                        "Are you sure you want to remove this task? (y/N) \n"
+                                        + task.getDescription());
         System.out.println(confirmation);
         if (confirmation.trim().equals("y")) {
             tasks.remove(index - 1);
-            return "Task deleted! You now have " + tasks.size() + " tasks in your list.";
+            return "Task deleted! You now have " + tasks.size()
+                            + " tasks in your list.";
         } else {
             return "Task not deleted.";
         }
@@ -70,20 +73,25 @@ public class Todo {
      * @param substrings substrings to look for
      * @return list of matching tasks
      */
-    public String findTasksByDescription(String... substrings) throws IllegalArgumentException {
+    public String findTasksByDescription(String... substrings)
+                    throws IllegalArgumentException {
         if (substrings == null || substrings.length == 0) {
-            throw new IllegalArgumentException("Please provide at least one substring to search for.");
+            throw new IllegalArgumentException(
+                            "Please provide at least one substring to search for.");
         }
 
         return buildFilteredTasksString(tasks, task -> {
             String desc = task.getDescription().toLowerCase();
+
             for (String sub : substrings) {
                 if (!desc.contains(sub.toLowerCase())) {
                     return false;
                 }
             }
+
             return true;
-        }, "Here are the matching tasks in your list:", "No matching tasks found.");
+        }, "Here are the matching tasks in your list:",
+                        "No matching tasks found.");
     }
 
     /**
@@ -108,7 +116,8 @@ public class Todo {
      * @return formatted string of all tasks, or a message if none exist
      */
     public String listTasks() {
-        return buildFilteredTasksString(tasks, t -> true, "Here are the tasks in your list:", "Nothing to do!");
+        return buildFilteredTasksString(tasks, t -> true,
+                        "Here are the tasks in your list:", "Nothing to do!");
     }
 
     /**
@@ -116,25 +125,26 @@ public class Todo {
      * Task::isDueSoon).
      *
      * @return formatted string of due-soon tasks, or a congratulatory message
-     *         if none
+     *             if none
      */
     public String listDueSoonTasks() {
-        return buildFilteredTasksString(tasks, Task::isDueSoon, "Here are the tasks that are due soon:",
-                "You have no tasks that are due soon. Good job!");
+        return buildFilteredTasksString(tasks, Task::isDueSoon,
+                        "Here are the tasks that are due soon:",
+                        "You have no tasks that are due soon. Good job!");
     }
 
     /**
      * Builds a formatted string listing tasks that satisfy the given predicate.
      *
-     * @param taskList     list of tasks to inspect
-     * @param pred         predicate determining inclusion
-     * @param header       header line to print when there is at least one match
+     * @param taskList list of tasks to inspect
+     * @param pred predicate determining inclusion
+     * @param header header line to print when there is at least one match
      * @param emptyMessage message returned if no tasks match
      * @return formatted string of matching tasks (1-based numbering) or the
-     *         empty message
+     *             empty message
      */
-    private String buildFilteredTasksString(ArrayList<Task> taskList, Predicate<Task> pred, String header,
-            String emptyMessage) {
+    private String buildFilteredTasksString(ArrayList<Task> taskList,
+                    Predicate<Task> pred, String header, String emptyMessage) {
         StringBuilder sb = new StringBuilder(header + "\n");
         int i = 1;
         for (Task task : taskList) {

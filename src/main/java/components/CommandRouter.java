@@ -19,6 +19,43 @@ import utilities.IO;
  * interactive task creation workflows.
  */
 public class CommandRouter implements EventListener {
+    // Command constants
+    private static final String COMMAND_MARK = "mark";
+    private static final String COMMAND_DELETE = "delete";
+    private static final String COMMAND_FIND = "find";
+    private static final String COMMAND_TODO = "todo";
+    private static final String COMMAND_DEADLINE = "deadline";
+    private static final String COMMAND_EVENT = "event";
+    private static final String COMMAND_LIST = "list";
+    private static final String COMMAND_HELP = "help";
+    private static final String COMMAND_EXIT = "exit";
+
+    // Usage messages
+    private static final String USAGE_MARK = "Usage: mark <taskNumber>";
+    private static final String USAGE_UNMARK = "Usage: unmark <taskNumber>";
+    private static final String USAGE_DELETE = "Usage: delete <taskNumber>";
+    private static final String USAGE_FIND = "Please provide text to find. Usage: find <keywords>";
+
+    // User messages
+    private static final String MESSAGE_TASK_MARKED = "Nice! I've marked this task as done:";
+    private static final String MESSAGE_TASK_UNMARKED = "OK, I've marked this task as not done yet:";
+    private static final String MESSAGE_UNKNOWN_COMMAND = "Sorry I don't understand :(";
+    private static final String MESSAGE_HELP_HINT = "Type 'help' to see available commands.";
+    private static final String MESSAGE_GOODBYE = "Goodbye! Your tasks have been saved.";
+    private static final String MESSAGE_EMPTY_DESCRIPTION = "Task description cannot be empty.";
+    private static final String MESSAGE_EMPTY_EVENT_DESCRIPTION = "Event description cannot be empty.";
+    private static final String MESSAGE_INVALID_DATE = "Invalid date format. Task creation cancelled.";
+    private static final String MESSAGE_INVALID_START_TIME = "Invalid start time format. Event creation cancelled.";
+    private static final String MESSAGE_INVALID_END_TIME = "Invalid end time format. Event creation cancelled.";
+    private static final String MESSAGE_EXPECTED_FORMAT = "Expected format: ";
+
+    // Prompts
+    private static final String PROMPT_TASK_DESCRIPTION = "Please provide the task description:";
+    private static final String PROMPT_EVENT_DESCRIPTION = "Please provide the event description:";
+    private static final String PROMPT_DEADLINE = "Please provide the deadline (";
+    private static final String PROMPT_START_TIME = "Please provide the start time (";
+    private static final String PROMPT_END_TIME = "Please provide the end time (";
+
     private Todo todo;
 
     /**
@@ -60,40 +97,48 @@ public class CommandRouter implements EventListener {
         String command = IO.extractCommand(input);
         String args = IO.extractArgs(input, command);
         switch (command.toLowerCase()) {
-        case "mark":
+        case COMMAND_MARK:
             handleMarkCommand(args);
             break;
+        case COMMAND_DELETE:
         case "delete":
             handleDeleteCommand(args);
             break;
-        case "find":
+        case COMMAND_FIND:
             handleFindCommand(args);
             break;
-        case "todo":
+        case COMMAND_TODO:
             createTodoInteractive();
             break;
-        case "deadline":
+        case COMMAND_DEADLINE:
             createDeadlineInteractive();
             break;
-        case "event":
+        case COMMAND_EVENT:
             createEventInteractive();
             break;
-        case "list":
+        case COMMAND_LIST:
             handleListCommand();
             break;
-        case "help":
+        case COMMAND_HELP:
             handleHelpCommand();
             break;
-        case "exit":
+        case COMMAND_EXIT:
             handleExitCommand();
             break;
         default:
-            EventBus.publish("Sorry I don't understand :(", false);
-            EventBus.publish("Type 'help' to see available commands.", false);
+            handleUnknownCommand();
         }
 
         // Save after each command
         Data.saveListToFile(todo);
+    }
+
+    /**
+     * Handles unknown commands by providing appropriate error messages.
+     */
+    private void handleUnknownCommand() {
+        EventBus.publish(MESSAGE_UNKNOWN_COMMAND, false);
+        EventBus.publish(MESSAGE_HELP_HINT, false);
     }
 
     /**
@@ -105,7 +150,7 @@ public class CommandRouter implements EventListener {
     private void handleMarkCommand(String args) {
         Integer taskNumber = IO.parseIntArg(args);
         if (taskNumber == null) {
-            EventBus.publish("Usage: mark <taskNumber>", false);
+            EventBus.publish(USAGE_MARK, false);
             return;
         }
 
@@ -115,7 +160,6 @@ public class CommandRouter implements EventListener {
             String result = task.isDone() ? "as done" : "as not done";
             EventBus.publish(String.format("Nice! I've marked this task %s:",
                                             result), false);
-            EventBus.publish("  " + task.toString(), false);
         } catch (TaskNotFoundException e) {
             EventBus.publish(e.getMessage(), false);
         }
@@ -130,7 +174,7 @@ public class CommandRouter implements EventListener {
     private void handleDeleteCommand(String args) {
         Integer taskNumber = IO.parseIntArg(args);
         if (taskNumber == null) {
-            EventBus.publish("Usage: delete <taskNumber>", false);
+            EventBus.publish(USAGE_DELETE, false);
             return;
         }
 
@@ -151,8 +195,7 @@ public class CommandRouter implements EventListener {
      */
     private void handleFindCommand(String args) {
         if (args.isBlank()) {
-            EventBus.publish("Please provide text to find. Usage: find <keywords>",
-                                            false);
+            EventBus.publish(USAGE_FIND, false);
             return;
         }
 
@@ -178,24 +221,24 @@ public class CommandRouter implements EventListener {
      */
     private void handleHelpCommand() {
         String help = """
-                                        Here are the available commands:
+                        Here are the available commands:
 
-                                        Task Management:
-                                        • list - Show all tasks
-                                        • todo - Add a todo task (interactive)
-                                        • deadline - Add a deadline task (interactive)
-                                        • event - Add an event task (interactive)
-                                        • mark <number> - Mark task as done
-                                        • unmark <number> - Mark task as not done
-                                        • delete <number> - Delete a task
-                                        • find <keywords> - Find tasks by description
+                        Task Management:
+                        • list - Show all tasks
+                        • todo - Add a todo task (interactive)
+                        • deadline - Add a deadline task (interactive)
+                        • event - Add an event task (interactive)
+                        • mark <number> - Mark task as done
+                        • unmark <number> - Mark task as not done
+                        • delete <number> - Delete a task
+                        • find <keywords> - Find tasks by description
 
-                                        Other:
-                                        • help - Show this help message
-                                        • exit - Exit the application
+                        Other:
+                        • help - Show this help message
+                        • exit - Exit the application
 
-                                        Date format: dd/MM/yyyy HHmm (e.g., 25/12/2024 1800)
-                                        """;
+                        Date format: dd/MM/yyyy HHmm (e.g., 25/12/2024 1800)
+                        """;
         EventBus.publish(help, false);
     }
 
@@ -204,7 +247,7 @@ public class CommandRouter implements EventListener {
      */
     private void handleExitCommand() {
         Data.saveListToFile(todo);
-        EventBus.publish("Goodbye! Your tasks have been saved.", false);
+        EventBus.publish(MESSAGE_GOODBYE, false);
         System.exit(0);
     }
 
@@ -213,18 +256,15 @@ public class CommandRouter implements EventListener {
      * a task description and creates the task upon valid input.
      */
     private void createTodoInteractive() {
-        EventBus.publish("Please provide the task description:", false);
+        EventBus.publish(PROMPT_TASK_DESCRIPTION, false);
 
         EventBus.getInputAsync(description -> {
-            if (description.trim().isEmpty()) {
-                EventBus.publish("Task description cannot be empty.", false);
+            if (isEmptyDescription(description)) {
                 return;
             }
 
             Task task = new Task(description.trim());
-            String result = todo.addTask(task);
-            EventBus.publish(result, false);
-            Data.saveListToFile(todo);
+            addTaskAndSave(task);
         });
     }
 
@@ -233,32 +273,25 @@ public class CommandRouter implements EventListener {
      * for a task description and deadline, creating the task upon valid input.
      */
     private void createDeadlineInteractive() {
-        EventBus.publish("Please provide the task description:", false);
+        EventBus.publish(PROMPT_TASK_DESCRIPTION, false);
 
         EventBus.getInputAsync(description -> {
-            if (description.trim().isEmpty()) {
-                EventBus.publish("Task description cannot be empty.", false);
+            if (isEmptyDescription(description)) {
                 return;
             }
 
-            EventBus.publish("Please provide the deadline ("
-                                            + DateTime.INPUT_DATE_FORMAT + "):",
-                                            false);
+            EventBus.publish(
+                            PROMPT_DEADLINE + DateTime.INPUT_DATE_FORMAT + "):",
+                            false);
 
             EventBus.getInputAsync(dateInput -> {
                 try {
-                    LocalDateTime deadline = DateTime.parseDateTime(
-                                                    dateInput.trim());
+                    LocalDateTime deadline = DateTime
+                                    .parseDateTime(dateInput.trim());
                     Task task = new DeadlineTask(description.trim(), deadline);
-                    String result = todo.addTask(task);
-                    EventBus.publish(result, false);
-                    Data.saveListToFile(todo);
+                    addTaskAndSave(task);
                 } catch (Exception e) {
-                    EventBus.publish("Invalid date format. Task creation cancelled.",
-                                                    false);
-                    EventBus.publish("Expected format: "
-                                                    + DateTime.INPUT_DATE_FORMAT,
-                                                    false);
+                    publishDateError(MESSAGE_INVALID_DATE);
                 }
             });
         });
@@ -270,52 +303,91 @@ public class CommandRouter implements EventListener {
      * valid input for all fields.
      */
     private void createEventInteractive() {
-        EventBus.publish("Please provide the event description:", false);
+        EventBus.publish(PROMPT_EVENT_DESCRIPTION, false);
 
         EventBus.getInputAsync(description -> {
-            if (description.trim().isEmpty()) {
-                EventBus.publish("Event description cannot be empty.", false);
+            if (isEmptyEventDescription(description)) {
                 return;
             }
 
-            EventBus.publish("Please provide the start time ("
-                                            + DateTime.INPUT_DATE_FORMAT + "):",
-                                            false);
+            EventBus.publish(PROMPT_START_TIME + DateTime.INPUT_DATE_FORMAT
+                            + "):", false);
 
             EventBus.getInputAsync(startInput -> {
                 try {
-                    LocalDateTime startTime = DateTime.parseDateTime(
-                                                    startInput.trim());
-                    EventBus.publish("Please provide the end time ("
-                                                    + DateTime.INPUT_DATE_FORMAT
-                                                    + "):", false);
+                    LocalDateTime startTime = DateTime
+                                    .parseDateTime(startInput.trim());
+                    EventBus.publish(PROMPT_END_TIME
+                                    + DateTime.INPUT_DATE_FORMAT + "):", false);
 
                     EventBus.getInputAsync(endInput -> {
                         try {
-                            LocalDateTime endTime = DateTime.parseDateTime(
-                                                            endInput.trim());
+                            LocalDateTime endTime = DateTime
+                                            .parseDateTime(endInput.trim());
                             Task task = new EventTask(description.trim(),
-                                                            startTime, endTime);
-                            String result = todo.addTask(task);
-                            EventBus.publish(result, false);
-                            Data.saveListToFile(todo);
+                                            startTime, endTime);
+                            addTaskAndSave(task);
                         } catch (Exception e) {
-                            EventBus.publish("Invalid end time format. Event creation cancelled.",
-                                                            false);
-                            EventBus.publish("Expected format: "
-                                                            + DateTime.INPUT_DATE_FORMAT,
-                                                            false);
+                            publishDateError(MESSAGE_INVALID_END_TIME);
                         }
                     });
                 } catch (Exception e) {
-                    EventBus.publish("Invalid start time format. Event creation cancelled.",
-                                                    false);
-                    EventBus.publish("Expected format: "
-                                                    + DateTime.INPUT_DATE_FORMAT,
-                                                    false);
+                    publishDateError(MESSAGE_INVALID_START_TIME);
                 }
             });
         });
+    }
+
+    /**
+     * Checks if the provided description is empty and publishes error message
+     * if so.
+     *
+     * @param description the description to validate
+     * @return true if description is empty, false otherwise
+     */
+    private boolean isEmptyDescription(String description) {
+        if (description.trim().isEmpty()) {
+            EventBus.publish(MESSAGE_EMPTY_DESCRIPTION, false);
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Checks if the provided event description is empty and publishes error
+     * message if so.
+     *
+     * @param description the description to validate
+     * @return true if description is empty, false otherwise
+     */
+    private boolean isEmptyEventDescription(String description) {
+        if (description.trim().isEmpty()) {
+            EventBus.publish(MESSAGE_EMPTY_EVENT_DESCRIPTION, false);
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Adds a task to the todo list and saves the data.
+     *
+     * @param task the task to add
+     */
+    private void addTaskAndSave(Task task) {
+        String result = todo.addTask(task);
+        EventBus.publish(result, false);
+        Data.saveListToFile(todo);
+    }
+
+    /**
+     * Publishes date format error messages.
+     *
+     * @param errorMessage the specific error message to publish
+     */
+    private void publishDateError(String errorMessage) {
+        EventBus.publish(errorMessage, false);
+        EventBus.publish(MESSAGE_EXPECTED_FORMAT + DateTime.INPUT_DATE_FORMAT,
+                        false);
     }
 
     /**

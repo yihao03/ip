@@ -197,7 +197,7 @@ public class CommandRouter implements EventListener {
         }
 
         try {
-            String result = todo.findTasksByDescription(args.split("\\s+"));
+            String result = todo.fuzzyFindTasks(args);
             EventBus.publish(result, false);
         } catch (IllegalArgumentException e) {
             EventBus.publish(e.getMessage(), false);

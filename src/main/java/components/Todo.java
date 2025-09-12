@@ -67,8 +67,10 @@ public class Todo {
     }
 
     /**
-     * Finds tasks whose descriptions contain all given substrings
-     * (case-insensitive). If no substrings are provided, returns all tasks.
+     * @deprecated Use {@link #fuzzyFindTasks(String)} instead for better search
+     *                 Finds tasks whose descriptions contain all given
+     *                 substrings (case-insensitive). If no substrings are
+     *                 provided, returns all tasks.
      *
      * @param substrings substrings to look for
      * @return list of matching tasks
@@ -92,6 +94,51 @@ public class Todo {
             return true;
         }, "Here are the matching tasks in your list:",
                         "No matching tasks found.");
+    }
+
+    /**
+     * Finds tasks using fuzzy matching where characters from the search term
+     * appear in order in the task description (case-insensitive).
+     *
+     * @param searchTerm the term to fuzzy search for
+     * @return list of matching tasks
+     * @throws IllegalArgumentException if search term is null or empty
+     */
+    public String fuzzyFindTasks(String searchTerm)
+                    throws IllegalArgumentException {
+        if (searchTerm == null || searchTerm.trim().isEmpty()) {
+            throw new IllegalArgumentException("Please provide a search term.");
+        }
+
+        String cleanSearchTerm = searchTerm.trim().toLowerCase();
+
+        return buildFilteredTasksString(tasks, task -> {
+            return fuzzyMatch(task.getDescription().toLowerCase(),
+                            cleanSearchTerm);
+        }, "Here are the matching tasks in your list:",
+                        "No matching tasks found.");
+    }
+
+    /**
+     * Performs simple fuzzy matching by checking if characters from the search
+     * term appear in order in the target string.
+     *
+     * @param target the string to search in
+     * @param search the string to search for
+     * @return true if all characters in search appear in order in target
+     */
+    private boolean fuzzyMatch(String target, String search) {
+        int targetIndex = 0;
+        int searchIndex = 0;
+
+        while (targetIndex < target.length() && searchIndex < search.length()) {
+            if (target.charAt(targetIndex) == search.charAt(searchIndex)) {
+                searchIndex++;
+            }
+            targetIndex++;
+        }
+
+        return searchIndex == search.length();
     }
 
     /**

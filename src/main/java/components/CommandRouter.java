@@ -32,13 +32,10 @@ public class CommandRouter implements EventListener {
 
     // Usage messages
     private static final String USAGE_MARK = "Usage: mark <taskNumber>";
-    private static final String USAGE_UNMARK = "Usage: unmark <taskNumber>";
     private static final String USAGE_DELETE = "Usage: delete <taskNumber>";
     private static final String USAGE_FIND = "Please provide text to find. Usage: find <keywords>";
 
     // User messages
-    private static final String MESSAGE_TASK_MARKED = "Nice! I've marked this task as done:";
-    private static final String MESSAGE_TASK_UNMARKED = "OK, I've marked this task as not done yet:";
     private static final String MESSAGE_UNKNOWN_COMMAND = "Sorry I don't understand :(";
     private static final String MESSAGE_HELP_HINT = "Type 'help' to see available commands.";
     private static final String MESSAGE_GOODBYE = "Goodbye! Your tasks have been saved.";
@@ -93,7 +90,8 @@ public class CommandRouter implements EventListener {
      */
     private void processCommand(String input) {
         assert input != null : "Input string cannot be null";
-        assert !input.trim().isEmpty() : "Input should not be empty after trimming";
+        assert !input.trim()
+                        .isEmpty() : "Input should not be empty after trimming";
         String command = IO.extractCommand(input);
         String args = IO.extractArgs(input, command);
         switch (command.toLowerCase()) {
@@ -101,7 +99,6 @@ public class CommandRouter implements EventListener {
             handleMarkCommand(args);
             break;
         case COMMAND_DELETE:
-        case "delete":
             handleDeleteCommand(args);
             break;
         case COMMAND_FIND:
@@ -159,7 +156,7 @@ public class CommandRouter implements EventListener {
             Task task = todo.toggleDone(taskNumber);
             String result = task.isDone() ? "as done" : "as not done";
             EventBus.publish(String.format("Nice! I've marked this task %s:",
-                                            result), false);
+                            result), false);
         } catch (TaskNotFoundException e) {
             EventBus.publish(e.getMessage(), false);
         }

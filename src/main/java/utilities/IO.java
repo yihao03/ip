@@ -17,9 +17,9 @@ public class IO {
                                     new InputStreamReader(System.in, StandardCharsets.UTF_8));
 
     /**
-     * @deprecated. Reads a single line from standard input after printing a ">
-     * " prompt. If no console is attached (e.g., running in an IDE), it echoes
-     * the entered line back to standard output for visibility.
+     * Reads a single line from standard input after printing a "> " prompt. If
+     * no console is attached (e.g., running in an IDE), it echoes the entered
+     * line back to standard output for visibility.
      *
      * @return the line read, or an empty string on error (never null)
      */
@@ -39,8 +39,7 @@ public class IO {
     }
 
     /**
-     * @deprecated. a custom prompt (with newline) and then delegates to
-     * {@link #readLine()}.
+     * a custom prompt (with newline) and then delegates to {@link #readLine()}.
      *
      * @param prompt message to show before reading
      * @return user input line (never null, empty string on error)
@@ -89,10 +88,12 @@ public class IO {
      * @return parsed Integer or null if absent / invalid
      */
     public static Integer parseIntArg(String args) {
+        // Note: args can be null - this is handled by the method logic
         if (args == null || args.isBlank()) {
             return null;
         }
         String num = args.replaceAll("[^0-9-]", "");
+        assert num != null : "Regex replacement should never return null";
         if (num.isEmpty()) {
             return null;
         }

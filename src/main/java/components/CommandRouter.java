@@ -36,9 +36,9 @@ public class CommandRouter implements EventListener {
     private static final String USAGE_FIND = "Please provide text to find. Usage: find <keywords>";
 
     // User messages
-    private static final String MESSAGE_UNKNOWN_COMMAND = "Sorry I don't understand :(";
-    private static final String MESSAGE_HELP_HINT = "Type 'help' to see available commands.";
-    private static final String MESSAGE_GOODBYE = "Goodbye! Your tasks have been saved.";
+    private static final String MESSAGE_UNKNOWN_COMMAND = "Oopsie! Dumpy doesn't get that. Maybe try again?";
+    private static final String MESSAGE_HELP_HINT = "Type 'help' for Dumpy's silly commands!";
+    private static final String MESSAGE_GOODBYE = "Bye-bye! Dumpy saved your stuff, hopefully!";
     private static final String MESSAGE_EMPTY_DESCRIPTION = "Task description cannot be empty.";
     private static final String MESSAGE_EMPTY_EVENT_DESCRIPTION = "Event description cannot be empty.";
     private static final String MESSAGE_INVALID_DATE = "Invalid date format. Task creation cancelled.";
@@ -47,12 +47,11 @@ public class CommandRouter implements EventListener {
     private static final String MESSAGE_EXPECTED_FORMAT = "Expected format: ";
 
     // Prompts
-    private static final String PROMPT_TASK_DESCRIPTION = "Please provide the task description:";
-    private static final String PROMPT_EVENT_DESCRIPTION = "Please provide the event description:";
-    private static final String PROMPT_DEADLINE = "Please provide the deadline (";
-    private static final String PROMPT_START_TIME = "Please provide the start time (";
-    private static final String PROMPT_END_TIME = "Please provide the end time (";
-
+    private static final String PROMPT_TASK_DESCRIPTION = "Dumpy wants to know: What's the task?";
+    private static final String PROMPT_EVENT_DESCRIPTION = "Tell Dumpy about the event!";
+    private static final String PROMPT_DEADLINE = "When's it due? Dumpy needs the deadline (";
+    private static final String PROMPT_START_TIME = "Start time for Dumpy (";
+    private static final String PROMPT_END_TIME = "And the end time (";
     private Todo todo;
 
     /**
@@ -91,39 +90,39 @@ public class CommandRouter implements EventListener {
     private void processCommand(String input) {
         assert input != null : "Input string cannot be null";
         assert !input.trim()
-                        .isEmpty() : "Input should not be empty after trimming";
+                .isEmpty() : "Input should not be empty after trimming";
         String command = IO.extractCommand(input);
         String args = IO.extractArgs(input, command);
         switch (command.toLowerCase()) {
-        case COMMAND_MARK:
-            handleMarkCommand(args);
-            break;
-        case COMMAND_DELETE:
-            handleDeleteCommand(args);
-            break;
-        case COMMAND_FIND:
-            handleFindCommand(args);
-            break;
-        case COMMAND_TODO:
-            createTodoInteractive();
-            break;
-        case COMMAND_DEADLINE:
-            createDeadlineInteractive();
-            break;
-        case COMMAND_EVENT:
-            createEventInteractive();
-            break;
-        case COMMAND_LIST:
-            handleListCommand();
-            break;
-        case COMMAND_HELP:
-            handleHelpCommand();
-            break;
-        case COMMAND_EXIT:
-            handleExitCommand();
-            break;
-        default:
-            handleUnknownCommand();
+            case COMMAND_MARK:
+                handleMarkCommand(args);
+                break;
+            case COMMAND_DELETE:
+                handleDeleteCommand(args);
+                break;
+            case COMMAND_FIND:
+                handleFindCommand(args);
+                break;
+            case COMMAND_TODO:
+                createTodoInteractive();
+                break;
+            case COMMAND_DEADLINE:
+                createDeadlineInteractive();
+                break;
+            case COMMAND_EVENT:
+                createEventInteractive();
+                break;
+            case COMMAND_LIST:
+                handleListCommand();
+                break;
+            case COMMAND_HELP:
+                handleHelpCommand();
+                break;
+            case COMMAND_EXIT:
+                handleExitCommand();
+                break;
+            default:
+                handleUnknownCommand();
         }
 
         // Save after each command
@@ -155,8 +154,8 @@ public class CommandRouter implements EventListener {
             assert taskNumber != null : "Task number should be validated before calling toggleDone";
             Task task = todo.toggleDone(taskNumber);
             String result = task.isDone() ? "as done" : "as not done";
-            EventBus.publish(String.format("Nice! I've marked this task %s:",
-                            result), false);
+            EventBus.publish(String.format("Yay! Dumpy marked it %s:",
+                    result), false);
         } catch (TaskNotFoundException e) {
             EventBus.publish(e.getMessage(), false);
         }
@@ -218,24 +217,24 @@ public class CommandRouter implements EventListener {
      */
     private void handleHelpCommand() {
         String help = """
-                        Here are the available commands:
+                Here are the available commands:
 
-                        Task Management:
-                        • list - Show all tasks
-                        • todo - Add a todo task (interactive)
-                        • deadline - Add a deadline task (interactive)
-                        • event - Add an event task (interactive)
-                        • mark <number> - Mark task as done
-                        • unmark <number> - Mark task as not done
-                        • delete <number> - Delete a task
-                        • find <keywords> - Find tasks by description
+                Task Management:
+                • list - Show all tasks
+                • todo - Add a todo task (interactive)
+                • deadline - Add a deadline task (interactive)
+                • event - Add an event task (interactive)
+                • mark <number> - Mark task as done
+                • unmark <number> - Mark task as not done
+                • delete <number> - Delete a task
+                • find <keywords> - Find tasks by description
 
-                        Other:
-                        • help - Show this help message
-                        • exit - Exit the application
+                Other:
+                • help - Show this help message
+                • exit - Exit the application
 
-                        Date format: dd/MM/yyyy HHmm (e.g., 25/12/2024 1800)
-                        """;
+                Date format: dd/MM/yyyy HHmm (e.g., 25/12/2024 1800)
+                """;
         EventBus.publish(help, false);
     }
 
@@ -278,13 +277,13 @@ public class CommandRouter implements EventListener {
             }
 
             EventBus.publish(
-                            PROMPT_DEADLINE + DateTime.INPUT_DATE_FORMAT + "):",
-                            false);
+                    PROMPT_DEADLINE + DateTime.INPUT_DATE_FORMAT + "):",
+                    false);
 
             EventBus.getInputAsync(dateInput -> {
                 try {
                     LocalDateTime deadline = DateTime
-                                    .parseDateTime(dateInput.trim());
+                            .parseDateTime(dateInput.trim());
                     Task task = new DeadlineTask(description.trim(), deadline);
                     addTaskAndSave(task);
                 } catch (Exception e) {
@@ -308,21 +307,21 @@ public class CommandRouter implements EventListener {
             }
 
             EventBus.publish(PROMPT_START_TIME + DateTime.INPUT_DATE_FORMAT
-                            + "):", false);
+                    + "):", false);
 
             EventBus.getInputAsync(startInput -> {
                 try {
                     LocalDateTime startTime = DateTime
-                                    .parseDateTime(startInput.trim());
+                            .parseDateTime(startInput.trim());
                     EventBus.publish(PROMPT_END_TIME
-                                    + DateTime.INPUT_DATE_FORMAT + "):", false);
+                            + DateTime.INPUT_DATE_FORMAT + "):", false);
 
                     EventBus.getInputAsync(endInput -> {
                         try {
                             LocalDateTime endTime = DateTime
-                                            .parseDateTime(endInput.trim());
+                                    .parseDateTime(endInput.trim());
                             Task task = new EventTask(description.trim(),
-                                            startTime, endTime);
+                                    startTime, endTime);
                             addTaskAndSave(task);
                         } catch (Exception e) {
                             publishDateError(MESSAGE_INVALID_END_TIME);
@@ -384,7 +383,7 @@ public class CommandRouter implements EventListener {
     private void publishDateError(String errorMessage) {
         EventBus.publish(errorMessage, false);
         EventBus.publish(MESSAGE_EXPECTED_FORMAT + DateTime.INPUT_DATE_FORMAT,
-                        false);
+                false);
     }
 
     /**
@@ -392,7 +391,7 @@ public class CommandRouter implements EventListener {
      * process messages, only input events.
      *
      * @param message the message content (unused)
-     * @param isUser whether the message is from a user (unused)
+     * @param isUser  whether the message is from a user (unused)
      */
     @Override
     public void onMessage(String message, boolean isUser) {

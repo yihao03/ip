@@ -1,0 +1,184 @@
+/* Main application styling */
+.root {
+    -fx-background-color: #f5f5f5;
+    -fx-font-family: "Segoe UI", "San Francisco", "Helvetica Neue", Arial, sans-serif;
+}
+
+/* Scroll pane styling */
+.scroll-pane {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+}
+
+.scroll-pane .viewport {
+    -fx-background-color: transparent;
+}
+
+.scroll-pane .scroll-bar:vertical {
+    -fx-background-color: transparent;
+    -fx-pref-width: 8px;
+}
+
+.scroll-pane .scroll-bar:vertical .track {
+    -fx-background-color: #e0e0e0;
+    -fx-border-radius: 4px;
+    -fx-background-radius: 4px;
+}
+
+.scroll-pane .scroll-bar:vertical .thumb {
+    -fx-background-color: #c0c0c0;
+    -fx-border-radius: 4px;
+    -fx-background-radius: 4px;
+}
+
+.scroll-pane .scroll-bar:vertical .thumb:hover {
+    -fx-background-color: #a0a0a0;
+}
+
+/* Dialog container */
+.dialog-container {
+    -fx-padding: 10 15 10 15;
+    -fx-spacing: 12;
+    -fx-background-color: transparent;
+}
+
+/* Input area */
+.input-area {
+    -fx-background-color: white;
+    -fx-border-color: #e0e0e0;
+    -fx-border-width: 1 0 0 0;
+    -fx-padding: 15;
+}
+
+.user-input {
+    -fx-background-color: white;
+    -fx-border-color: #d0d0d0;
+    -fx-border-width: 1;
+    -fx-border-radius: 20;
+    -fx-background-radius: 20;
+    -fx-padding: 12 16 12 16;
+    -fx-font-size: 14px;
+    -fx-prompt-text-fill: #999999;
+}
+
+.user-input:focused {
+    -fx-border-color: #007AFF;
+    -fx-effect: dropshadow(gaussian, rgba(0, 122, 255, 0.3), 4, 0, 0, 0);
+}
+
+.send-button {
+    -fx-background-color: #007AFF;
+    -fx-text-fill: white;
+    -fx-border-radius: 20;
+    -fx-background-radius: 20;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-padding: 12 20 12 20;
+    -fx-cursor: hand;
+}
+
+.send-button:hover {
+    -fx-background-color: #0056b3;
+}
+
+.send-button:pressed {
+    -fx-background-color: #004085;
+}
+
+/* User dialog styling (right side, blue bubbles) */
+.user-dialog {
+    -fx-alignment: center-right;
+    -fx-spacing: 8;
+    -fx-padding: 5 0 5 50;
+}
+
+.user-dialog .label {
+    -fx-background-color: #007AFF;
+    -fx-background-radius: 18 18 4 18;
+    -fx-padding: 12 16 12 16;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-wrap-text: true;
+    -fx-max-width: 280;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.15), 3, 0, 0, 2);
+    -fx-line-spacing: 2;
+}
+
+.user-dialog ImageView {
+    -fx-fit-width: 28;
+    -fx-fit-height: 28;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 2, 0, 0, 1);
+}
+
+/* Bot dialog styling (left side, white bubbles) */
+.bot-dialog {
+    -fx-alignment: center-left;
+    -fx-spacing: 8;
+    -fx-padding: 5 50 5 0;
+}
+
+.bot-dialog .label {
+    -fx-background-color: white;
+    -fx-background-radius: 18 18 18 4;
+    -fx-padding: 12 16 12 16;
+    -fx-text-fill: #333333;
+    -fx-font-size: 14px;
+    -fx-wrap-text: true;
+    -fx-max-width: 280;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 2, 0, 0, 1);
+    -fx-border-color: #e8e8e8;
+    -fx-border-width: 1;
+    -fx-border-radius: 18 18 18 4;
+    -fx-line-spacing: 2;
+}
+
+.bot-dialog .image-view {
+    -fx-fit-width: 28;
+    -fx-fit-height: 28;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 2, 0, 0, 1);
+}
+
+/* Error dialog styling (red bubbles) */
+.error-dialog {
+    -fx-alignment: center-left;
+    -fx-spacing: 8;
+    -fx-padding: 5 50 5 0;
+}
+
+.error-dialog .label {
+    -fx-background-color: #ffebee;
+    -fx-background-radius: 18 18 18 4;
+    -fx-padding: 12 16 12 16;
+    -fx-text-fill: #c62828;
+    -fx-font-size: 14px;
+    -fx-wrap-text: true;
+    -fx-max-width: 280;
+    -fx-effect: dropshadow(gaussian, rgba(244, 67, 54, 0.2), 3, 0, 0, 1);
+    -fx-border-color: #ffcdd2;
+    -fx-border-width: 1;
+    -fx-border-radius: 18 18 18 4;
+    -fx-font-weight: bold;
+    -fx-line-spacing: 2;
+}
+
+/* Welcome message styling (centered, gray bubble) */
+.welcome-dialog {
+    -fx-alignment: center;
+    -fx-padding: 20 40 20 40;
+}
+
+.welcome-dialog .label {
+    -fx-background-color: #f8f9fa;
+    -fx-background-radius: 12;
+    -fx-padding: 16 20 16 20;
+    -fx-border-color: #dee2e6;
+    -fx-border-width: 1;
+    -fx-border-radius: 12;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.05), 2, 0, 0, 1);
+    -fx-text-fill: #6c757d;
+    -fx-font-size: 14px;
+    -fx-wrap-text: true;
+    -fx-text-alignment: center;
+    -fx-font-style: italic;
+    -fx-line-spacing: 2;
+}

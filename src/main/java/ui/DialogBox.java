@@ -25,6 +25,9 @@ public class DialogBox extends HBox {
     @FXML
     private ImageView displayPicture;
 
+    /**
+     * enum to represent the type of dialog box.
+     */
     public enum DialogType {
         USER, BOT, ERROR, WELCOME
     }
@@ -32,7 +35,7 @@ public class DialogBox extends HBox {
     private DialogBox(String text, Image img, DialogType type) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(DialogBox.class
-                    .getResource("/view/DialogBox.fxml"));
+                            .getResource("/view/DialogBox.fxml"));
             fxmlLoader.setController(this);
             fxmlLoader.setRoot(this);
             fxmlLoader.load();
@@ -47,7 +50,7 @@ public class DialogBox extends HBox {
 
     private void setupAvatar(Image img, DialogType type) {
         if (img != null && (type == DialogType.USER
-                || type == DialogType.BOT)) {
+                        || type == DialogType.BOT)) {
             displayPicture.setImage(img);
             displayPicture.setPreserveRatio(true);
             displayPicture.setSmooth(true);
@@ -73,20 +76,22 @@ public class DialogBox extends HBox {
         this.getStyleClass().clear();
 
         switch (type) {
-            case USER:
-                this.getStyleClass().add("user-dialog");
-                break;
-            case BOT:
-                this.getStyleClass().add("bot-dialog");
-                flip(); // Keep the flip for bot messages
-                break;
-            case ERROR:
-                this.getStyleClass().add("error-dialog");
-                flip(); // Errors appear from bot side
-                break;
-            case WELCOME:
-                this.getStyleClass().add("welcome-dialog");
-                break;
+        case USER:
+            this.getStyleClass().add("user-dialog");
+            break;
+        case BOT:
+            this.getStyleClass().add("bot-dialog");
+            flip(); // Keep the flip for bot messages
+            break;
+        case ERROR:
+            this.getStyleClass().add("error-dialog");
+            flip(); // Errors appear from bot side
+            break;
+        case WELCOME:
+            this.getStyleClass().add("welcome-dialog");
+            break;
+        default:
+            break;
         }
     }
 
@@ -96,7 +101,7 @@ public class DialogBox extends HBox {
      */
     private void flip() {
         ObservableList<Node> tmp = FXCollections
-                .observableArrayList(this.getChildren());
+                        .observableArrayList(this.getChildren());
         Collections.reverse(tmp);
         getChildren().setAll(tmp);
         setAlignment(Pos.TOP_LEFT);

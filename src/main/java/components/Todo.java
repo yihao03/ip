@@ -67,13 +67,13 @@ public class Todo {
     }
 
     /**
-     * @deprecated Use {@link #fuzzyFindTasks(String)} instead for better search
-     *                 Finds tasks whose descriptions contain all given
-     *                 substrings (case-insensitive). If no substrings are
-     *                 provided, returns all tasks.
+     * Use {@link #fuzzyFindTasks(String)} instead for better search Finds tasks
+     * whose descriptions contain all given substrings (case-insensitive). If no
+     * substrings are provided, returns all tasks.
      *
      * @param substrings substrings to look for
      * @return list of matching tasks
+     * @deprecated
      */
     public String findTasksByDescription(String... substrings)
                     throws IllegalArgumentException {

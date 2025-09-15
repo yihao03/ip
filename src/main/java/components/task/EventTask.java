@@ -25,8 +25,7 @@ public class EventTask extends Task {
      * @param endTime event end date-time (must not be before startTime)
      */
     public EventTask(String description, Boolean status,
-                                    LocalDateTime startTime,
-                                    LocalDateTime endTime) {
+                    LocalDateTime startTime, LocalDateTime endTime) {
         super(description, status);
         this.startTime = startTime;
         this.endTime = endTime;
@@ -40,7 +39,7 @@ public class EventTask extends Task {
      * @param endTime event end date-time
      */
     public EventTask(String description, LocalDateTime startTime,
-                                    LocalDateTime endTime) {
+                    LocalDateTime endTime) {
         this(description, false, startTime, endTime);
     }
 
@@ -54,7 +53,7 @@ public class EventTask extends Task {
     public boolean isDueSoon() {
         LocalDateTime now = LocalDateTime.now();
         return !super.isDone() && !startTime.isBefore(now) // start >= now
-                                        && startTime.isBefore(now.plusWeeks(1));
+                        && startTime.isBefore(now.plusWeeks(1));
     }
 
     /**
@@ -66,9 +65,8 @@ public class EventTask extends Task {
     @Override
     public String encodeData() {
         return String.join(Data.DELIMITER, TaskType.EVENT.toString(),
-                                        super.encodeBasic(),
-                                        DateTime.formatDateTime(startTime),
-                                        DateTime.formatDateTime(endTime));
+                        super.encodeBasic(), DateTime.formatDateTime(startTime),
+                        DateTime.formatDateTime(endTime));
     }
 
     /**
@@ -79,13 +77,13 @@ public class EventTask extends Task {
      * @throws IllegalArgumentException if the data length is invalid
      */
     public static Task decodeData(String[] data)
-                                    throws IllegalArgumentException {
+                    throws IllegalArgumentException {
         if (data.length != 5) {
             throw new IllegalArgumentException();
         }
         return new EventTask(data[1], data[2].equals("1"),
-                                        DateTime.parseDateTime(data[3]),
-                                        DateTime.parseDateTime(data[4]));
+                        DateTime.parseDateTime(data[3]),
+                        DateTime.parseDateTime(data[4]));
     }
 
     /**
@@ -97,7 +95,6 @@ public class EventTask extends Task {
     @Override
     public String toString() {
         return super.toString() + " (from: " + DateTime.printDateTime(startTime)
-                                        + " to: "
-                                        + DateTime.printDateTime(endTime) + ")";
+                        + " to: " + DateTime.printDateTime(endTime) + ")";
     }
 }

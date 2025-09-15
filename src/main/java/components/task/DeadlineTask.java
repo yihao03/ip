@@ -32,7 +32,7 @@ public class DeadlineTask extends Task {
      * @param deadline date-time by which the task is due
      */
     private DeadlineTask(String description, Boolean status,
-                                    LocalDateTime deadline) {
+                    LocalDateTime deadline) {
         super(description, status);
         this.deadline = deadline;
     }
@@ -47,12 +47,12 @@ public class DeadlineTask extends Task {
      * @throws IllegalArgumentException if the data length is invalid
      */
     public static Task decodeData(String[] data)
-                                    throws IllegalArgumentException {
+                    throws IllegalArgumentException {
         if (data.length != 4) {
             throw new IllegalArgumentException();
         }
         return new DeadlineTask(data[1], data[2].equals("1"),
-                                        DateTime.parseDateTime(data[3]));
+                        DateTime.parseDateTime(data[3]));
     }
 
     /**
@@ -65,8 +65,8 @@ public class DeadlineTask extends Task {
     @Override
     public String encodeData() {
         return String.join(Data.DELIMITER, TaskType.DEADLINE.toString(),
-                                        super.encodeBasic(),
-                                        DateTime.formatDateTime(this.deadline));
+                        super.encodeBasic(),
+                        DateTime.formatDateTime(this.deadline));
     }
 
     /**
@@ -79,9 +79,8 @@ public class DeadlineTask extends Task {
     @Override
     public boolean isDueSoon() {
         LocalDateTime now = LocalDateTime.now();
-        System.out.println(super.isDone());
         return !super.isDone() && !deadline.isBefore(now) // deadline <= now
-                                        && deadline.isBefore(now.plusWeeks(1));
+                        && deadline.isBefore(now.plusWeeks(1));
     }
 
     /**
@@ -92,6 +91,6 @@ public class DeadlineTask extends Task {
     @Override
     public String toString() {
         return super.toString() + " (by: " + DateTime.printDateTime(deadline)
-                                        + ")";
+                        + ")";
     }
 }

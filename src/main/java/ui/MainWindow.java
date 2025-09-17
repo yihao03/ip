@@ -24,9 +24,9 @@ public class MainWindow extends AnchorPane implements EventListener {
     private Button sendButton;
 
     private Image userImage = new Image(
-            this.getClass().getResourceAsStream("/images/DaUser.png"));
+                    this.getClass().getResourceAsStream("/images/DaUser.png"));
     private Image dumpyImage = new Image(
-            this.getClass().getResourceAsStream("/images/DaDuke.png"));
+                    this.getClass().getResourceAsStream("/images/Dumpy.jpg"));
 
     /**
      * Handles incoming messages from the event bus and displays them in the
@@ -34,14 +34,14 @@ public class MainWindow extends AnchorPane implements EventListener {
      * through the EventBus.
      *
      * @param message the message content to display
-     * @param isUser  true if the message is from the user, false if from Dumpy
+     * @param isUser true if the message is from the user, false if from Dumpy
      */
     @Override
     public void onMessage(String message, boolean isUser) {
         // Check if this is an error message (you can customize this logic)
         if (!isUser && (message.toLowerCase().contains("error")
-                || message.toLowerCase().contains("invalid")
-                || message.toLowerCase().contains("unknown"))) {
+                        || message.toLowerCase().contains("invalid")
+                        || message.toLowerCase().contains("unknown"))) {
             addErrorBubble(message);
         } else {
             addBubble(message, isUser);
@@ -81,7 +81,7 @@ public class MainWindow extends AnchorPane implements EventListener {
 
         // Add welcome message
         addWelcomeBubble("Hello! I'm Dumpy. How can I assist you today?",
-                dumpyImage);
+                        dumpyImage);
     }
 
     /**
@@ -106,16 +106,16 @@ public class MainWindow extends AnchorPane implements EventListener {
      * the dialog container for display.
      *
      * @param message the message content to display in the dialog box
-     * @param isUser  true to create a user dialog, false to create a Dumpy
-     *                dialog
+     * @param isUser true to create a user dialog, false to create a Dumpy
+     *            dialog
      */
     private void addBubble(String message, boolean isUser) {
         if (isUser) {
             dialogContainer.getChildren()
-                    .add(DialogBox.getUserDialog(message, userImage));
+                            .add(DialogBox.getUserDialog(message, userImage));
         } else {
             dialogContainer.getChildren()
-                    .add(DialogBox.getDumpyDialog(message, dumpyImage));
+                            .add(DialogBox.getDumpyDialog(message, dumpyImage));
         }
     }
 
@@ -126,7 +126,7 @@ public class MainWindow extends AnchorPane implements EventListener {
      */
     private void addErrorBubble(String errorMessage) {
         dialogContainer.getChildren()
-                .add(DialogBox.getErrorDialog(errorMessage));
+                        .add(DialogBox.getErrorDialog(errorMessage));
     }
 
     /**
@@ -136,6 +136,6 @@ public class MainWindow extends AnchorPane implements EventListener {
      */
     private void addWelcomeBubble(String welcomeMessage, Image img) {
         dialogContainer.getChildren()
-                .add(DialogBox.getWelcomeDialog(welcomeMessage, img));
+                        .add(DialogBox.getWelcomeDialog(welcomeMessage, img));
     }
 }

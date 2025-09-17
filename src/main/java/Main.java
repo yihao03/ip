@@ -12,6 +12,9 @@ import javafx.stage.Stage;
  * A GUI for dumpy using FXML.
  */
 public class Main extends Application {
+    public static void main(String[] args) {
+        launch(args);
+    }
 
     @Override
     public void start(Stage stage) {

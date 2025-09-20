@@ -19,10 +19,10 @@ public class DateTime {
 
     /** Formatter for parsing / formatting in the canonical input pattern. */
     private static DateTimeFormatter formatter = DateTimeFormatter
-                                    .ofPattern(DateTime.INPUT_DATE_FORMAT);
+                    .ofPattern(DateTime.INPUT_DATE_FORMAT);
     /** Formatter for pretty-printing to users. */
     private static DateTimeFormatter outputFormatter = DateTimeFormatter
-                                    .ofPattern(DateTime.OUTPUT_DATE_FORMAT);
+                    .ofPattern(DateTime.OUTPUT_DATE_FORMAT);
 
     /**
      * Continuously reads lines from {@link IO#readLine()} until a valid
@@ -38,8 +38,8 @@ public class DateTime {
                 return DateTime.parseDateTime(date);
             } catch (DateTimeParseException e) {
                 System.out.printf("Invalid format. Use %s (e.g., %s)\n",
-                                                DateTime.INPUT_DATE_FORMAT,
-                                                DateTime.EXAMPLE_DATE);
+                                DateTime.INPUT_DATE_FORMAT,
+                                DateTime.EXAMPLE_DATE);
             }
         }
     }
@@ -53,7 +53,7 @@ public class DateTime {
      *             {@link #INPUT_DATE_FORMAT}
      */
     public static LocalDateTime parseDateTime(String date)
-                                    throws DateTimeParseException {
+                    throws DateTimeParseException {
         assert date != null : "Date string cannot be null";
         return LocalDateTime.parse(date, formatter);
     }
@@ -77,7 +77,9 @@ public class DateTime {
      * @return formatted string in {@link #OUTPUT_DATE_FORMAT}
      */
     public static String printDateTime(LocalDateTime dateTime) {
-        assert dateTime != null : "DateTime cannot be null";
+        if (dateTime == null) {
+            throw new IllegalArgumentException("DateTime cannot be null");
+        }
         return dateTime.format(outputFormatter);
     }
 }

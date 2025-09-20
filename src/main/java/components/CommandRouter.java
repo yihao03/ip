@@ -224,8 +224,7 @@ public class CommandRouter implements EventListener {
                         • todo - Add a todo task (interactive)
                         • deadline - Add a deadline task (interactive)
                         • event - Add an event task (interactive)
-                        • mark <number> - Mark task as done
-                        • unmark <number> - Mark task as not done
+                        • mark <number> - Toggle task completion status
                         • delete <number> - Delete a task
                         • find <keywords> - Find tasks by description
 

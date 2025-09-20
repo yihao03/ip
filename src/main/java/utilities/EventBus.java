@@ -117,4 +117,15 @@ public class EventBus {
             inputCallbacks.offer(callback);
         }
     }
+
+    /**
+     * Retrieves user input in a blocking manner. This method will wait until
+     * input is available in the queue.
+     *
+     * @return the input string
+     * @throws InterruptedException if the thread is interrupted while waiting
+     */
+    public static String getInput() throws InterruptedException {
+        return inputs.take();
+    }
 }

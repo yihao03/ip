@@ -33,7 +33,8 @@ public class Data {
     /** Directory where application data is stored. */
     private static final Path DATA_DIRECTORY = Path.of("data");
     /** Path to the main todo list storage file. */
-    private static final Path DATA_FILE = DATA_DIRECTORY.resolve("todo_list.txt");
+    private static final Path DATA_FILE = DATA_DIRECTORY
+                    .resolve("todo_list.txt");
 
     /**
      * Ensures the data directory and file exist, creating them if missing.
@@ -49,7 +50,8 @@ public class Data {
             try {
                 DATA_FILE.toFile().createNewFile();
             } catch (Exception e) {
-                System.out.println("Error creating data file: " + e.getMessage());
+                System.out.println(
+                                "Error creating data file: " + e.getMessage());
             }
         }
 
@@ -69,10 +71,12 @@ public class Data {
 
         try {
             Stream<String> contentStream = Files.lines(filepath);
-            contentStream.forEach(entry -> res.loadTask(Data.decodeData(entry)));
+            contentStream.forEach(
+                            entry -> res.loadTask(Data.decodeData(entry)));
             contentStream.close();
         } catch (IOException e) {
-            System.out.println("Error encountered when reading data from file: " + filepath.toString());
+            System.out.println("Error encountered when reading data from file: "
+                            + filepath.toString());
             throw new RuntimeException(e);
         }
 
@@ -93,7 +97,8 @@ public class Data {
         try {
             Files.writeString(filepath, data);
         } catch (IOException e) {
-            System.out.println("Error encountered when writing data to file: " + filepath.toString());
+            System.out.println("Error encountered when writing data to file: "
+                            + filepath.toString());
             throw new RuntimeException(e);
         }
     }
@@ -120,7 +125,8 @@ public class Data {
             default:
                 throw new IllegalArgumentException();
             }
-        } catch (IllegalArgumentException | NullPointerException | ArrayIndexOutOfBoundsException e) {
+        } catch (IllegalArgumentException | NullPointerException
+                        | ArrayIndexOutOfBoundsException e) {
             return Task.createCorruptTask();
         }
     }
